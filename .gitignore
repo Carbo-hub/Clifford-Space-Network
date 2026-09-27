@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C/C++ Build artifacts
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.obj
+*.dylib
+*.dll
+*.exe
+
+# Python virtual environments & packages
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+
+# Testing & linting caches
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Datasets and raw media
+data/
+*.zip
+*.tar
+*.tar.gz
+*.csv
+
+# Model weights and checkpoints (uploaded to Google Drive)
+*.pt
+*.pth
+*.onnx
+checkpoints/
+yolo*.pt
+
+# Training runs, telemetry and logs
+runs/
+*.log
+
+# Scratch and internal benchmarking scripts
+scratch/
+
+# IDE and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# LaTeX auxiliary files (keep .tex, .bib, .pdf)
+docs/paper/*.aux
+docs/paper/*.bbl
+docs/paper/*.blg
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.synctex.gz
+docs/paper/*.toc
+docs/paper/*.fls
+docs/paper/*.fdb_latexmk

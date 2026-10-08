@@ -1,5 +1,5 @@
 # Clifford Space Networks (CSN)
-### Sub-Quadratic Non-Abelian Lie Rotor Scans for Unified Sequential and Spatial Deep Learning
+### Sub-Quadratic Non-Abelian Lie Rotor Scans for Geometric Sequence Modeling and Physical Systems
 
 [![arXiv](https://img.shields.io/badge/arXiv-2609.xxxxx-b31b1b.svg)](docs/paper/clifford_space_network.pdf)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
@@ -9,13 +9,16 @@
 
 ---
 
-## 📌 Executive Summary
+## 📌 Executive Summary (v1 Feasibility Study)
 
-**Clifford Space Networks (CSN)** establish a unified geometric computing paradigm that elevates modern deep learning from unconstrained Euclidean vectors $\mathbb{R}^C$ into **graded Clifford multivector algebras** $\mathcal{Cl}(p, q)$. By parameterizing state transitions via the continuous **non-abelian Spinor Lie group** $\mathrm{Spin}(n) \cong \mathrm{SO}(n)$, CSN resolves foundational scaling bottlenecks across artificial intelligence.
+**Clifford Space Networks (CSN)** formulate an analytical geometric computing paradigm that elevates state representations into **graded Clifford multivector algebras** $\mathcal{Cl}(p, q)$ and parameterizes state transitions via the continuous **non-abelian Spinor Lie group** $\mathrm{Spin}(n)$. 
 
-While applicable to any task addressed by traditional neural networks, **CSN exhibits its most transformative, state-of-the-art advantage when operating on dynamic structures with context windows**:
-- **Dynamic Context-Window Systems (CSN-LM)**: Non-abelian Lie rotor scans preserve non-commutative grammatical syntax and temporal order in strictly sub-quadratic time ($\mathcal{O}(L \log L)$ parallel scan, $\mathcal{O}(1)$ autoregressive generation memory), matching Transformer accuracy with **$19.7\times$ fewer parameters** (158k vs. 1.90M).
-- **Static Spatial Structures (CSN-V3)**: Dual-grade $\mathcal{Cl}(4,0) \parallel \mathcal{Cl}(8,0)$ multivector streams regularized by Sasaki contact manifold metrics deliver competitive detection accuracy with **$1.93\times$ fewer parameters** and **$+70.7\%$ higher information density** than standard Euclidean detectors (YOLO26n).
+Unlike existing Clifford neural networks designed as static PDE surrogates for 3D physics, CSN is architected as an **analytical solver for non-commutative logic graphs and physical Hamiltonian systems**, enabling exact sub-quadratic state transitions ($\mathcal{O}(L \log L)$ parallel associative scan, $\mathcal{O}(1)$ autoregressive generation memory).
+
+**Current v1 Status & Feasibility Proofs**:
+- **Dynamic Context-Window Systems (CSN-LM)**: Validated on Tiny Shakespeare, achieving 50.50% Top-1 accuracy with **$19.7\times$ fewer parameters** (158k vs. 1.90M) and **$1.54\times$ faster token generation** than Scaled Transformers with $\mathcal{O}(1)$ memory ($\approx 21$ MB). Large-scale evaluations on BabyLM 10M/100M and TinyStories are in progress to evaluate asymptotic multi-billion-token regimes where attention mechanisms traditionally scale.
+- **Static Spatial Structures (CSN-V3)**: Validated on MOT16 pedestrian detection with **$1.98\times$ fewer parameters** than YOLO26n and **$+70.7\%$ higher information density** at real-time speeds (54.98 ms / 18.2 FPS) using register-level fused CUDA scan kernels. Full-scale hierarchical scaling to ImageNet-1k is under active development.
+- **Identified v1 Bottleneck & Roadmap**: We diagnose the *interconnect bottleneck* of information-dense Clifford neurons and introduce **Port-Hamiltonian Interconnections (PHS)** as the architectural foundation for v2.
 
 ```
                            Foundational Architectural Comparison
@@ -184,7 +187,7 @@ with torch.no_grad():
 
 ```bibtex
 @article{nosenko2026clifford,
-  title={Clifford Space Networks: Sub-Quadratic Non-Abelian Lie Rotor Scans for Unified Sequential and Spatial Deep Learning},
+  title={Clifford Space Networks: Sub-Quadratic Non-Abelian Lie Rotor Scans for Geometric Sequence Modeling and Physical Systems},
   author={Nosenko, Mykyta},
   journal={arXiv preprint arXiv:2609.xxxxx},
   year={2026}

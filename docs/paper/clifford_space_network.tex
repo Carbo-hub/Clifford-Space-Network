@@ -20,7 +20,7 @@
     urlcolor=magenta!70!black
 }
 
-\title{\textbf{Clifford Space Networks: Sub-Quadratic Non-Abelian Lie Rotor Scans for Unified Sequential and Spatial Deep Learning}}
+\title{\textbf{Clifford Space Networks: Sub-Quadratic Non-Abelian Lie Rotor Scans for Geometric Sequence Modeling and Physical Systems}}
 
 \author{
     \textbf{Mykyta Nosenko} \\
@@ -37,87 +37,72 @@
 \maketitle
 
 \begin{abstract}
-Current deep learning architectures rely predominantly on unconstrained Euclidean vectors in $\mathbb{R}^d$, failing to capture intrinsic geometric transformations, rotational symmetries, and non-commutative sequential compositionality. While the Transformer attention mechanism achieves high expressive capacity, it incurs an irreducible quadratic computational complexity $\mathcal{O}(L^2)$ and an exploding KV-cache memory footprint. Conversely, sub-quadratic State Space Models (SSMs) enforce commutative diagonal transitions ($A_t A_{t-1} = A_{t-1} A_t$), leading to state degeneracy when modeling hierarchical grammatical order and non-commutative dependencies.
+Modern deep learning architectures predominantly map representations to unconstrained Euclidean coordinates in $\mathbb{R}^d$, neglecting coordinate-free geometric invariants and non-commutative compositionality. While Transformer self-attention achieves high expressive capacity, it incurs an irreducible quadratic computational complexity $\mathcal{O}(L^2)$ and an exploding KV-cache memory footprint. Conversely, sub-quadratic State Space Models (SSMs) enforce strictly commutative diagonal transitions ($A_t A_{t-1} = A_{t-1} A_t$), leading to state degeneracy when capturing hierarchical order permutations and non-commutative dependencies.
 
-This paper introduces \textbf{Clifford Space Networks (CSN)}, a unified geometric computing paradigm founded on Clifford multivector algebras $\Cl(p, q)$ and continuous \textbf{non-abelian} Lie rotor groups $\mathrm{Spin}(n)$. CSN replaces heuristic Euclidean activations with coordinate-free multivectors and formulates state updates as continuous rotations on Lie group manifolds. While universally applicable across modern artificial intelligence domains---including sequential modeling, spatial perception, physical AI, and embodied robotics---\textbf{CSN demonstrates its most transformative advantage when operating on dynamic structures with context windows}. In sequential regimes, non-abelian Lie rotor recurrence captures non-commutative word-order syntax and temporal dynamics in strictly sub-quadratic time via an $\mathcal{O}(L \log L)$ parallel associative scan and $\mathcal{O}(1)$ autoregressive generation memory. Concurrently, on \textbf{static spatial structures}, CSN achieves competitive accuracy and unprecedented parameter efficiency through graded multivector decomposition and Sasaki contact manifold metrics.
+This work introduces \textbf{Clifford Space Networks (CSN)}, an analytical geometric framework founded on Clifford multivector algebras $\Cl(p, q)$ and continuous \textbf{non-abelian} Lie rotor groups $\mathrm{Spin}(n)$. Unlike existing Clifford neural networks designed primarily for static PDE surrogates and spatial equivariance, CSN formulates recurrent state transitions as isometric Lie group rotations via the rational Cayley transform, executing in strictly sub-quadratic time through an $\mathcal{O}(L \log L)$ parallel associative scan and $\mathcal{O}(1)$ autoregressive generation memory. 
 
-The architecture is instantiated across two canonical benchmarks on an NVIDIA GeForce GTX 1660 Ti:
+\textbf{As a v1 feasibility study}, this paper validates the core mathematical operator across compact sequence and spatial perception tasks:
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Dynamic Context-Window Instantiation (CSN-LM)}: Evaluated on the Tiny Shakespeare language modeling benchmark, CSN-LM $\Cl(8, 0)$ achieves \textbf{50.50\% Top-1 Next-Token Accuracy} and a Perplexity of \textbf{5.46} at only \textbf{158,164 parameters}, matching the performance of a \textbf{1.90M parameter Scaled Transformer}---a \textbf{19.7$\times$ parameter reduction}---while substantially outperforming Mamba S6 (41.65\%) and Liquid CfC (36.80\%). At Iso-Accuracy parity, CSN-LM outpaces the Scaled Transformer in test-time autoregressive generation speed (up to \textbf{301.0 tokens/second} vs. \textbf{195.6 tokens/second}, a \textbf{1.54$\times$ speedup}) while maintaining a strictly constant $\mathcal{O}(1)$ state memory ($\sim 21$ MB).
-    \item \textbf{Static Spatial Instantiation (CSN-V3)}: In pedestrian detection on MOT16, CSN-V3 operates at merely \textbf{1.29 million parameters} ($1.98\times$ smaller than calibrated YOLO26n) while achieving superior pedestrian recall (\textbf{70.0\%} vs. \textbf{65.4\%}) and \textbf{50.19 F1 per million parameters} (+70.7\% higher information density). Equipped with native fused CUDA scan kernels, CSN-V3 executes at \textbf{54.98 ms (18.2 FPS)} on GTX 1660 Ti, matching the real-time speed of standard Euclidean detectors. Crucially, CSN-V3 establishes this performance with an \textbf{incomparably smaller pre-training footprint}: trained on merely 5,316 frames from scratch ($>22\times$ less data and $>1000\times$ less compute than YOLO26n's full MS COCO pre-training of 118,287 images over 500 epochs).
+    \item \textbf{Sequence Feasibility (CSN-LM)}: On the Tiny Shakespeare benchmark, CSN-LM $\Cl(8, 0)$ reaches \textbf{50.50\% Top-1 Accuracy} (PPL 5.46) with only \textbf{158,164 parameters}, matching the accuracy of a 1.90M parameter Scaled Transformer (\textbf{19.7$\times$ parameter reduction}) and demonstrating up to \textbf{1.54$\times$ faster test-time token generation} at $\mathcal{O}(1)$ state memory ($\sim 21$ MB). While these compact results confirm exceptional sample efficiency, large-scale multi-billion-token benchmarks (BabyLM 10M/100M, TinyStories) are currently underway to evaluate regimes where attention mechanisms traditionally scale.
+    \item \textbf{Spatial Feasibility (CSN-V3)}: On MOT16 pedestrian detection, CSN-V3 achieves \textbf{70.0\% recall} and \textbf{50.19 F1 per million parameters} at 1.29M parameters ($1.98\times$ fewer than YOLO26n) with native fused CUDA scan kernels operating at real-time speeds (54.98 ms / 18.2 FPS on a consumer GTX 1660 Ti).
 \end{enumerate}
-These empirical and analytical results demonstrate that Clifford multivector algebras provide a mathematically rigorous, sub-quadratic, and parameter-dense foundation for universal artificial intelligence.
+Finally, we position CSN primarily as an \textbf{analytical solver for formal logic graphs and physical Hamiltonian systems}, diagnose the \textbf{interconnect bottleneck} of information-dense Clifford neurons, and outline a principled architectural evolution toward \textbf{Port-Hamiltonian Interconnections (PHS)} and full-scale ImageNet benchmarks.
 \end{abstract}
 
 \section{Introduction}
 
-Modern deep learning architectures are constrained by foundational algebraic and computational limitations across both language and vision domains.
+The modeling of dynamic temporal processes, non-commutative symbolic structures, and continuous physical systems remains constrained by foundational algebraic trade-offs across modern neural architectures.
 
 \subsection{The Non-Abelian Dilemma in Sequence Modeling}
 
-In sequence modeling and natural language processing, the Transformer architecture~\cite{vaswani2017attention} has become the dominant paradigm due to its unconstrained pairwise attention mechanism:
+In sequence modeling and natural language processing, the Transformer architecture~\cite{vaswani2017attention} relies on unconstrained pairwise dot-product attention:
 \begin{equation}
     \mathrm{Attention}(Q, K, V) = \mathrm{softmax}\left(\frac{Q K^T}{\sqrt{d_k}}\right) V
 \end{equation}
-While highly expressive, Transformer attention incurs an irreducible quadratic computational bottleneck $\mathcal{O}(L^2)$ with respect to context window length $L$. Furthermore, autoregressive inference necessitates caching Key and Value tensors across all prior time steps ($KV$-cache), leading to severe memory scaling challenges during long-context generation ($L \ge 32\text{k}$).
+Although empirically dominant at scale, self-attention incurs an irreducible quadratic computational bottleneck $\mathcal{O}(L^2)$ and an exploding Key-Value ($KV$) cache memory footprint during autoregressive generation.
 
-To achieve linear $\mathcal{O}(L)$ computation, State Space Models (SSMs) such as S4, S5, and Mamba~\cite{gu2023mamba} introduce input-dependent continuous state equations discretized into linear recurrences. However, to enable the fast parallel prefix scan (Blelloch scan) in $\mathcal{O}(L \log L)$, SSMs enforce that the state transition matrix $A_t$ is strictly \textbf{diagonal}:
+To achieve linear computation, State Space Models (SSMs) such as S4, S5, and Mamba~\cite{gu2023mamba} introduce input-dependent linear recurrences. However, to enable the fast parallel prefix scan (Blelloch scan) in $\mathcal{O}(L \log L)$, SSMs enforce that the state transition matrix $A_t$ is strictly \textbf{diagonal}:
 \begin{equation}
     h_t = A_t h_{t-1} + B_t x_t, \quad A_t = \mathrm{diag}(a_{t,1}, \dots, a_{t,N})
 \end{equation}
-Consequently, the composition of state transitions across time is strictly \textbf{commutative} ($A_t A_{t-1} = A_{t-1} A_t$). However, natural language, formal logic, and symbolic computation are fundamentally \textbf{non-commutative}; the grammatical and semantic meaning of an expression depends critically on permutation and order (e.g., $A \circ B \neq B \circ A$). To capture non-commutative syntactic dependencies, commutative SSMs must significantly inflate their hidden state dimensions.
+Consequently, consecutive state transitions are strictly \textbf{commutative} ($A_t A_{t-1} = A_{t-1} A_t$). In contrast, grammatical syntax, algorithmic reasoning, and formal logic are fundamentally \textbf{non-commutative}; the semantic state depends critically on token order and non-trivial permutations ($A \circ B \neq B \circ A$). To capture non-commutative hierarchies, commutative SSMs must significantly inflate their hidden state dimensions.
 
-Similarly, Closed-form Continuous-time (CfC) and Liquid Neural Networks~\cite{hasani2022closed} model dynamical systems via continuous ODEs with explicit decay:
+Similarly, Closed-form Continuous-time (CfC) networks~\cite{hasani2022closed} model dynamical systems via continuous ODEs with explicit decay:
 \begin{equation}
     h_t = \sigma(-f(x_t) \Delta t) \odot \tanh(W_1 x_t) + (1 - \sigma(-f(x_t) \Delta t)) \odot \tanh(W_2 x_t)
 \end{equation}
-While providing continuous-time adaptability, CfC operates on unstructured Euclidean vectors and lacks the non-abelian geometric group invariants required for hierarchical sequence memory. Crucially, because CfC couples inputs and hidden states inside non-linear saturating activations ($\tanh$), it cannot be formulated as an associative matrix scan, restricting its training to slow sequential loops.
+While continuous, CfC couples inputs and recurrent states inside non-linear saturating activations ($\tanh$), which precludes formulation as an associative matrix scan and restricts training to sequential $\mathcal{O}(L)$ loops.
 
-\subsection{The Geometric Deficit in Computer Vision}
+\subsection{Distinction from Prior Clifford Neural Networks}
 
-In computer vision, standard convolutional networks (e.g., the YOLO series~\cite{redmon2016you,wang2024yolov9}) treat multi-channel activations as flat vectors in $\mathbb{R}^C$. Although Euclidean convolutions provide translation shift equivariance, they lack intrinsic equivariance to continuous spatial rotations, reflections, and perspective transformations~\cite{cohen2016group}. Consequently, modern detectors require millions of redundant parameters and heavy synthetic data augmentations to learn geometric invariances.
+The integration of Clifford (geometric) algebras into machine learning has garnered significant attention, particularly through Clifford Neural Layers for PDE modeling~\cite{brandstetter2022clifford}, Geometric Clifford Algebra Networks (GCANs)~\cite{ruhe2023geometric}, Clifford Group Equivariant Networks (CGENN)~\cite{ruhe2023clifford}, and Geometric Algebra Transformers (GATr)~\cite{brehmer2023geometric}.
 
-\subsection{CSN as a Universal Inductive Bias for Artificial Intelligence}
+However, a fundamental architectural distinction separates CSN from prior literature:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Target Domain}: Prior Clifford networks focus almost exclusively on static spatial symmetry groups ($O(n), E(n)$) or surrogate modelling for continuous Partial Differential Equations (e.g., fluid dynamics, weather forecasting). In contrast, CSN targets \textbf{sub-quadratic dynamic sequence modeling and state space transitions}.
+    \item \textbf{Transition Mechanics}: While previous works apply static geometric products of multivector weights ($W \star x$), CSN formulates recurrent state updates via the \textbf{rational Cayley transform} on Lie algebras $\mathfrak{so}(n) \to \mathrm{Spin}(n)$.
+    \item \textbf{Associative Scans}: Prior multivector architectures do not formulate causal temporal recurrences or require $\mathcal{O}(L^2)$ attention (as in GATr). CSN derives an exact affine closed form that admits a \textbf{parallel prefix scan in $\mathcal{O}(L \log L)$} and registers-level fused GPU kernels.
+\end{itemize}
 
-To resolve the non-abelian bottleneck in sequence modeling and the geometric deficit in static spatial perception, this paper introduces \textbf{Clifford Space Networks (CSN)}. By casting representations into Clifford multivector algebras $\Cl(p, q)$~\cite{hestenes1984clifford,dorst2009geometric,brandstetter2022clifford,ruhe2023geometric}, features are structured into graded geometric components (scalars, vectors, bivectors, and pseudo-scalars). State transitions are governed by the \textbf{non-abelian Spinor Lie group} $\mathrm{Spin}(n)$, enabling exact coordinate-free rotational compositionality in strictly sub-quadratic time.
+\subsection{Primary Orientation: Analytical Graph and Physical Solvers}
 
-Importantly, CSN is not limited to natural language or vision. The mathematical formulation represents a \textbf{universal inductive bias} applicable to all contemporary domains of artificial intelligence:
+While standard deep learning architectures approximate tasks through statistical pattern matching on flat Euclidean tensors, Clifford Space Networks were conceived as an \textbf{analytical engine}:
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Dynamic Context-Window \& Autoregressive AI}: Natural language modeling, automated code generation, streaming speech recognition, financial econometrics, and multivariate sensor streams benefit from non-abelian Lie rotor memory, which preserves syntactic token-order hierarchies without quadratic attention costs.
-    \item \textbf{Multimodal Perception \& Spatial AI}: Image recognition, video understanding, 3D point-cloud processing, Neural Radiance Fields (NeRF), 3D Gaussian Splatting, and sensor fusion natively map to geometric multivector algebra, achieving rotational and reflectional equivariance without synthetic data augmentation.
-    \item \textbf{Physical AI \& Scientific Machine Learning}: Geometric deep learning for Partial Differential Equations (Navier-Stokes fluid dynamics, Maxwell electromagnetism), molecular dynamics, protein conformation modeling, and Hamiltonian quantum many-body systems naturally express physical conservation laws in Clifford algebras.
-    \item \textbf{Autonomous Decision-Making \& Embodied AI}: Continuous reinforcement learning, robotic manipulator kinematics, quadruped locomotion, and autonomous driving state estimation operate on Lie groups ($\mathrm{SE}(3)$, $\mathrm{SO}(3)$), making continuous rotor dynamics the native state representation.
-    \item \textbf{Relational \& Topological AI}: Hyperbolic and non-abelian knowledge graph embeddings, drug-target interaction networks, and gene regulatory dynamics are naturally represented by graded multivectors.
+    \item \textbf{Analytical Logic Graph Solvers}: In formal logic, causal dependency networks, and knowledge graphs, relations are non-commutative and structured. By mapping entities to multivectors and relations to Spinor Lie rotors $R_{ij} \in \mathrm{Spin}(n)$, logical inference along graph paths reduces to exact algebraic rotor composition without geometric distortion.
+    \item \textbf{Physical System Modeling and Gauge Invariants}: Physical conservation laws (Hamiltonian mechanics, Maxwell's electrodynamics $F = E + I c B$, and gauge field theories) are natively expressed via differential forms and bivectors. CSN operates directly on the Lie group $\mathrm{Spin}(n)$ with strict algebraic norm preservation, providing an inductive bias for physical dynamical systems.
 \end{enumerate}
 
-\begin{figure}[htbp]
-\centering
-\fbox{
-\parbox{0.95\textwidth}{
-\small
-\textbf{Dual Structural Specialization: Dynamic Sequence Modeling vs. Static Spatial Perception} \\
-\vspace{0.4em}
-\textbf{1. Dynamic Structures with Context Windows (State-of-the-Art Breakthrough)}: \\
-$\bullet$ Operates on 1D temporal/sequential streams (Language, Code, Audio, Time-Series). \\
-$\bullet$ Governed by Non-Abelian Spinor Lie Rotors: $h_t = \sqrt{\alpha_t} R_t h_{t-1} + (1 - \alpha_t) S_t$. \\
-$\bullet$ Preserves strict non-commutative syntactic order ($R_t R_{t-1} \neq R_{t-1} R_t$) without quadratic attention overhead. \\
-$\bullet$ Matches Transformer performance with \textbf{19.7$\times$ fewer parameters} and constant $\mathcal{O}(1)$ generation memory. \\
-\vspace{0.4em}
-\textbf{2. Static Spatial Structures (Compact Geometric Efficiency)}: \\
-$\bullet$ Operates on 2D/3D spatial manifolds (Computer Vision, Point Clouds, Medical Imaging). \\
-$\bullet$ Governed by Dual-Grade Multivectors $\Cl(4,0) \parallel \Cl(8,0)$ with Sasaki Contact Manifold regularizers. \\
-$\bullet$ Achieves \textbf{70.0\% pedestrian recall} and \textbf{+70.7\% higher information density} than YOLO26n despite \textbf{$>1000\times$ less pre-training compute}.
-}
-}
-\caption{Dual structural specialization: Dynamic sequence modeling with context windows vs. static spatial perception.}
-\label{fig:csn_paradigm}
-\end{figure}
+\subsection{Architectural Scope: v1 Feasibility and the Road to Scale}
+
+This work constitutes a \textbf{Version 1 (v1) architectural feasibility study}. The empirical benchmarks presented herein validate that non-abelian Lie rotor scans can be executed with exact isometry, sub-quadratic training, and constant inference memory. 
+
+We explicitly acknowledge that while CSN demonstrates remarkable parameter efficiency on compact benchmarks, standard Transformers possess established scaling properties that emerge at multi-billion-token scales. Systematic evaluations on standardized corpora (BabyLM 10M/100M, TinyStories) and scaling spatial vision to ImageNet-1k are under active execution to characterize asymptotic scaling laws.
 
 \section{Mathematical Foundations: Clifford Algebras and Lie Rotors}
 
 \subsection{Clifford Algebra $\Cl(p, q)$}
 
-Let $V = \mathbb{R}^{p+q}$ be an $n$-dimensional real vector space equipped with a non-degenerate quadratic form $Q$ of signature $(p, q)$ where $n = p + q$. The Clifford algebra $\Cl(p, q)$ is the associative unital algebra generated by $V$ subject to the fundamental anti-commutation relations:
+Let $V = \mathbb{R}^{p+q}$ be an $n$-dimensional real vector space equipped with a quadratic form $Q$ of signature $(p, q)$ where $n = p + q$. The Clifford algebra $\Cl(p, q)$ is generated by $V$ subject to:
 \begin{equation}
     v^2 = Q(v) \cdot 1, \quad \forall v \in V
 \end{equation}
@@ -125,66 +110,54 @@ Given an orthonormal basis $\{e_1, \dots, e_n\}$, the generators satisfy:
 \begin{equation}
     e_i e_j + e_j e_i = 2 \eta_{ij} \mathbf{1}, \quad \eta_{ij} = \mathrm{diag}(\underbrace{+1, \dots, +1}_{p}, \underbrace{-1, \dots, -1}_{q})
 \end{equation}
-The total dimension of $\Cl(p, q)$ as a real vector space is $\dim \Cl(p, q) = 2^n$. Any multivector $A \in \Cl(p, q)$ admits a canonical grade projection:
+A multivector $A \in \Cl(p, q)$ admits a canonical grade decomposition:
 \begin{equation}
     A = \langle A \rangle_0 + \langle A \rangle_1 + \langle A \rangle_2 + \dots + \langle A \rangle_n = \sum_{k=0}^n \langle A \rangle_k
 \end{equation}
-where $\langle A \rangle_k$ represents the grade-$k$ homogeneous blade subspace $\bigwedge^k V$, corresponding to scalars ($k=0$), vectors ($k=1$), bivectors ($k=2$), and pseudo-scalars ($k=n$).
+where $\langle A \rangle_k \in \bigwedge^k V$ corresponds to scalars ($k=0$), vectors ($k=1$), bivectors ($k=2$), and pseudo-scalars ($k=n$).
 
 \subsection{Spinor Lie Group and the Rational Cayley Transform}
 
-The even sub-algebra $\Cl^+(p, q) = \bigoplus_{k \text{ even}} \bigwedge^k V$ forms a sub-algebra of dimension $2^{n-1}$. The Spinor group $\mathrm{Spin}(p, q)$ is defined as the subgroup of invertible elements in $\Cl^+(p, q)$ that preserve vector transformations via conjugation:
+The even sub-algebra $\Cl^+(p, q) = \bigoplus_{k \text{ even}} \bigwedge^k V$ defines the Spinor group:
 \begin{equation}
     \mathrm{Spin}(p, q) = \{ R \in \Cl^+(p, q) \mid R \tilde{R} = 1, \; \forall v \in V: R v \tilde{R} \in V \}
 \end{equation}
-where $\tilde{R}$ denotes the reversion anti-automorphism. In the Euclidean signature $\Cl(n, 0)$, $\mathrm{Spin}(n)$ is the universal double cover of the special orthogonal group $\mathrm{SO}(n)$:
+where $\tilde{R}$ is the reversion anti-automorphism. In the Euclidean signature $\Cl(n, 0)$, $\mathrm{Spin}(n)$ doubly covers $\mathrm{SO}(n)$:
 \begin{equation}
     1 \to \mathbb{Z}_2 \to \mathrm{Spin}(n) \xrightarrow{\rho} \mathrm{SO}(n) \to 1, \quad \rho(R)(v) = R v \tilde{R}
 \end{equation}
-The Lie algebra $\mathfrak{spin}(n) \cong \mathfrak{so}(n)$ consists of pure bivectors $\langle A \rangle_2 = \sum_{i < j} b_{ij} e_i \wedge e_j$, with dimension $\binom{n}{2} = \frac{n(n-1)}{2}$. 
+The Lie algebra $\mathfrak{spin}(n) \cong \mathfrak{so}(n)$ consists of pure bivectors $\langle A \rangle_2 = \sum_{i < j} b_{ij} e_i \wedge e_j$.
 
-To map bivector generators $\Omega \in \mathfrak{so}(n)$ into elements of the Lie group without resorting to truncated Taylor approximations or expensive matrix exponentials $\exp(\Omega)$, CSN employs the \textbf{rational Cayley transform}:
+To map bivectors $\Omega \in \mathfrak{so}(n)$ into group rotations without numerical truncation, CSN applies the \textbf{rational Cayley transform}:
 \begin{equation}
     R = \mathcal{C}(\Omega) = (I + \Omega)(I - \Omega)^{-1} \in \mathrm{Spin}(n)
 \end{equation}
-The Cayley transform represents an exact algebraic bijection between skew-symmetric matrices $\Omega \in \mathfrak{so}(n)$ and orthogonal rotation operators $R \in \mathrm{SO}(n)$. Crucially, the Cayley transform is strictly \textbf{isometric}:
+The Cayley transform is strictly isometric:
 \begin{equation}
     \|R v\| = \|v\|, \quad \forall v \in \mathbb{R}^n
 \end{equation}
-guaranteeing that state norms and spectral radii are bounded by unity by geometric construction.
+guaranteeing bounded spectral radius and zero gradient vanishing/explosion by geometric construction.
 
 \subsection{Exact Clifford Closed Form vs. Heuristic CfC}
 
-A central theoretical distinction exists between the continuous closed form derived in CSN and the Closed-form Continuous-depth (CfC) heuristic proposed by Hasani et al.~\cite{hasani2022closed}.
-
-CfC approximates liquid neuron dynamics via an empirical bounding ansatz on flat Euclidean vectors:
-\begin{equation}
-    h_t^{\text{CfC}} = \sigma(-f(x_t) \Delta t) \odot \tanh(W_1 x_t) + (1 - \sigma(-f(x_t) \Delta t)) \odot \tanh(W_2 x_t)
-\end{equation}
-Because the recurrent hidden state and inputs are intertwined inside non-linear saturating activations ($\tanh$), \textbf{CfC cannot be formulated as an associative linear recurrence}. As a direct consequence, CfC cannot be trained via parallel associative scans and is fundamentally restricted to sequential $\mathcal{O}(L)$ loops.
-
-In contrast, CSN derives an \textbf{exact algebraic closed form} on the Spinor Lie group manifold:
+In contrast to empirical bounding functions on flat vectors~\cite{hasani2022closed}, CSN defines an \textbf{exact algebraic closed form}:
 \begin{equation}
     \Omega_t = \frac{1}{2} B(x_t) \Delta t_t, \quad R_t = (I + \Omega_t)(I - \Omega_t)^{-1} \in \mathrm{Spin}(n)
 \end{equation}
 \begin{equation}
     h_t = \sqrt{\alpha_t} R_t h_{t-1} + (1 - \alpha_t) S_t \equiv M_t h_{t-1} + C_t
 \end{equation}
-where $\alpha_t = \sigma(-\gamma(x_t) \Delta t_t) \in (0, 1)$ is the continuous-time conductance decay, $M_t = \sqrt{\alpha_t} R_t$, and $C_t = (1 - \alpha_t) S_t$. 
+where $\alpha_t = \sigma(-\gamma(x_t) \Delta t_t) \in (0, 1)$ is continuous decay, $M_t = \sqrt{\alpha_t} R_t$, and $C_t = (1 - \alpha_t) S_t$. 
 
-\textbf{Advantages of the Clifford Closed Form}:
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Strict Associativity}: The affine state transition operator $(M_j, C_j) \circ (M_i, C_i) = (M_j M_i, M_j C_i + C_j)$ satisfies exact mathematical associativity:
-    \begin{equation}
-        \left( (M_k, C_k) \circ (M_j, C_j) \right) \circ (M_i, C_i) = (M_k, C_k) \circ \left( (M_j, C_j) \circ (M_i, C_i) \right)
-    \end{equation}
-    This enables training via the \textbf{parallel prefix scan} (Blelloch scan) in $\mathcal{O}(L \log L)$ time and fused single-launch GPU kernels.
-    \item \textbf{Exact Lie Group Isometry}: Because $R_t$ is an exact element of $\mathrm{Spin}(n)$, the transition is strictly energy-preserving ($\|R_t v\| = \|v\|$), preventing vanishing or exploding gradients across arbitrary context lengths without artificial heuristic clamping.
-\end{itemize}
+Because $(M_j, C_j) \circ (M_i, C_i) = (M_j M_i, M_j C_i + C_j)$ satisfies exact mathematical associativity:
+\begin{equation}
+    \left( (M_k, C_k) \circ (M_j, C_j) \right) \circ (M_i, C_i) = (M_k, C_k) \circ \left( (M_j, C_j) \circ (M_i, C_i) \right)
+\end{equation}
+the entire sequence can be trained via the \textbf{parallel associative prefix scan} in $\mathcal{O}(L \log L)$ time.
 
 \section{Asymptotic Complexity Analysis}
 
-Table~\ref{tab:complexity_comparison} compares the asymptotic complexities of modern foundation architectures across training and inference regimes.
+Table~\ref{tab:complexity_comparison} compares the asymptotic characteristics of modern architectures.
 
 \begin{table}[htbp]
 \centering
@@ -203,43 +176,32 @@ Liquid CfC (Hasani et al.) & $\mathcal{O}(L d)$ & $\mathcal{O}(d^2)$ & $\mathcal
 }
 \end{table}
 
-While Transformers suffer from quadratic computational and linear memory growth during context scaling, CSN-LM achieves sub-quadratic parallel training $\mathcal{O}(L \log L)$ and strictly constant $\mathcal{O}(1)$ inference memory, while maintaining non-abelian state compositionality.
-
-\section{Dynamic Context-Window Instantiation: CSN-LM}
+\section{Feasibility Benchmark: Dynamic Sequence Modeling}
 
 \subsection{Architecture of CSN-LM}
 
-In CSN-LM, input token sequences $x \in \{1, \dots, V\}^L$ are projected into an embedding space $\mathbb{R}^{d}$. Each Clifford recurrent layer processes embeddings through a multi-neuron Lie algebra projection:
+In CSN-LM, input token sequences $x \in \{1, \dots, V\}^L$ are projected into embedding dimension $\mathbb{R}^{d}$. Each Clifford recurrent layer computes:
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Input State Injection}: $S_t = W_{\text{in}} x_t \in \mathbb{R}^{N \times D \times D}$, where $N$ is the number of Clifford neurons and $D$ is the matrix representation dimension.
+    \item \textbf{Input State Injection}: $S_t = W_{\text{in}} x_t \in \mathbb{R}^{N \times D \times D}$ for $N$ Clifford neurons and dimension $D$.
     \item \textbf{Continuous Adaptive Pacing}: $\Delta t_t = \mathrm{softplus}(W_{\Delta t} x_t) \cdot \Delta t_{\mathrm{base}}$.
     \item \textbf{Continuous Conductance Decay}: $\alpha_t = \sigma(-\mathrm{softplus}(W_\gamma x_t) \Delta t_t) \in (0, 1)$.
-    \item \textbf{Non-Abelian Bivector Generator}: Skew-symmetric generator $\Omega_t \in \mathfrak{so}(D)$ computed from $\binom{D}{2}$ bivector coefficients:
-    \begin{equation}
-        \Omega_t = \frac{1}{2} \Delta t_t \sum_{i < j} b_{ij}(x_t) (E_{ij} - E_{ji})
-    \end{equation}
+    \item \textbf{Non-Abelian Generator}: $\Omega_t = \frac{1}{2} \Delta t_t \sum_{i < j} b_{ij}(x_t) (E_{ij} - E_{ji}) \in \mathfrak{so}(D)$.
     \item \textbf{Rational Cayley Rotor}: $R_t = (I + \Omega_t)(I - \Omega_t)^{-1} \in \mathrm{Spin}(D)$.
-    \item \textbf{Affine Recurrence}:
-    \begin{equation}
-        h_t = \sqrt{\alpha_t} R_t h_{t-1} + (1 - \alpha_t) S_t
-    \end{equation}
+    \item \textbf{Affine Recurrence}: $h_t = \sqrt{\alpha_t} R_t h_{t-1} + (1 - \alpha_t) S_t$.
 \end{enumerate}
 
-\subsection{Hyperbolic Cosine Centroid Head}
-
-To read out logits without introducing unconstrained Euclidean projection parameters, CSN-LM maps final multivector states $h_t$ through a \textbf{Hyperbolic Cosine Centroid Head}:
+To decode logits without unconstrained Euclidean projections, CSN-LM employs a \textbf{Hyperbolic Cosine Centroid Head}:
 \begin{equation}
     \mathrm{logit}_c = s \cdot \cos\left(d_g(h_t, \mathcal{E}_c)\right) + b_c = s \cdot \frac{\langle h_t, \mathcal{E}_c \rangle}{\|h_t\| \, \|\mathcal{E}_c\|} + b_c
 \end{equation}
-where $s \in \mathbb{R}$ is a learnable manifold curvature temperature and $b_c$ is an unconstrained Bayesian prior bias encoding static token frequencies $P(c)$.
 
-\subsection{Language Modeling Benchmark}
+\subsection{Sequence Modeling Feasibility Results}
 
-The proposed CSN-LM architecture is evaluated against competitive sequence baselines on the \textbf{Tiny Shakespeare} benchmark ($1.1\text{M}$ characters):
+Table~\ref{tab:llm_leaderboard} evaluates CSN-LM against sequence baselines on the Tiny Shakespeare benchmark ($1.1\text{M}$ characters).
 
 \begin{table}[htbp]
 \centering
-\caption{Language modeling performance on the Tiny Shakespeare benchmark.}
+\caption{Language modeling performance on the Tiny Shakespeare feasibility benchmark.}
 \label{tab:llm_leaderboard}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{@{}lccccc@{}}
@@ -255,9 +217,9 @@ Liquid CfC (2 layers stacked) & 64 (Euclidean) & 86,400 & 9.12 & 36.80\% & 3.189
 }
 \end{table}
 
-\subsection{Iso-Accuracy Scaling Law: Matching CSN-LM Parity}
+\subsection{Iso-Accuracy Scaling Parity}
 
-To quantify parameter efficiency, the Causal Transformer was scaled (increasing depth to 4 layers, width to $d=192$, heads to 6) until matching parity with CSN-LM ($\approx 50.0\%$ Top-1 Accuracy).
+To reach the accuracy of CSN-LM with only 158k parameters, a standard Transformer was scaled until matching parity ($\approx 50.0\%$ Top-1 Accuracy, Table~\ref{tab:iso_accuracy}).
 
 \begin{table}[htbp]
 \centering
@@ -275,39 +237,20 @@ Scaled Liquid CfC (2L, $d=128$) & 380,000 & 2.4$\times$ & 7.89 & 40.20\% \\ \bot
 }
 \end{table}
 
-To reach the accuracy of CSN-LM with only 158k parameters, \textbf{the standard Transformer requires 1.90 million parameters---a 19.7$\times$ parameter overhead}. Furthermore, Mamba S6 plateaus near $44\%$ accuracy because commutative diagonal transitions cannot compactly represent non-abelian token order permutations.
+The Transformer requires 1.90 million parameters ($19.7\times$ overhead) to match CSN-LM on this benchmark, highlighting the strong inductive bias of non-abelian rotor memory under strict capacity constraints.
 
-\section{Static Spatial Instantiation: CSN-V3 for Computer Vision}
+\section{Feasibility Benchmark: Static Spatial Perception}
 
-While sequence modeling demonstrates the non-abelian expressivity of Clifford rotors on dynamic context windows, the same mathematical principles translate directly to \textbf{static 2D computer vision}.
-
-\subsection{Dual-Grade Clifford Feature Representation}
-
-In the vision domain, CSN-V3 structures spatial features using parallel dual-grade multivector streams:
-\begin{equation}
-    \mathcal{F}_{\mathrm{spatial}} = \Cl(4, 0) \parallel \Cl(8, 0)
-\end{equation}
-The $\Cl(4, 0)$ stream processes low-order directional gradients (bivectors representing planar rotations), while the $\Cl(8, 0)$ stream operates on higher-order topological features (pseudo-scalars and conformal scalings).
-
-\subsection{Sasaki Contact Metric on Tangent Bundles}
-
-To regularize spatial feature flow across convolutional channels, CSN-V3 equips the feature tangent bundle $TM$ with the \textbf{Sasaki metric}~\cite{sasaki1958differential}:
+To evaluate geometric rotors on static 2D vision, CSN-V3 employs dual-grade streams $\mathcal{F}_{\mathrm{spatial}} = \Cl(4, 0) \parallel \Cl(8, 0)$ regularized by Sasaki tangent bundle metrics~\cite{sasaki1958differential}:
 \begin{equation}
     g_S(X, Y) = g(\pi_* X, \pi_* Y) + g(\mathcal{K} X, \mathcal{K} Y)
 \end{equation}
-where $\pi_*: T(TM) \to TM$ is the differential projection and $\mathcal{K}$ is the Riemannian connection map. The Sasaki geodesic regularization loss:
-\begin{equation}
-    \mathcal{L}_{\mathrm{Sasaki}} = \lambda_S \sum_{i,j} g_S\left(\nabla_{\dot{\gamma}} \dot{\gamma}, \nabla_{\dot{\gamma}} \dot{\gamma}\right)
-\end{equation}
-penalizes geodesic curvature on the feature manifold, maintaining continuous spatial coherence across scale transitions.
 
-\subsection{Vision Benchmark and Real-Hardware Fused CUDA Metrics on GTX 1660 Ti}
-
-Table~\ref{tab:cv_hardware_benchmark} reports comprehensive computer vision metrics evaluated on held-out MOT16 validation sequences at $640 \times 640$ resolution, benchmarked directly on a single \textbf{NVIDIA GeForce GTX 1660 Ti (6 GB VRAM)} with native fused CUDA scan kernels enabled.
+Table~\ref{tab:cv_hardware_benchmark} reports pedestrian detection performance on MOT16 at $640 \times 640$ resolution on an NVIDIA GeForce GTX 1660 Ti with native fused CUDA kernels enabled.
 
 \begin{table}[htbp]
 \centering
-\caption{Comprehensive Computer Vision benchmark and real-hardware execution metrics with Fused CUDA Kernels on NVIDIA GeForce GTX 1660 Ti (6 GB VRAM) at $640 \times 640$ resolution.}
+\caption{Computer Vision benchmark and execution metrics on NVIDIA GeForce GTX 1660 Ti (6 GB VRAM) at $640 \times 640$ resolution.}
 \label{tab:cv_hardware_benchmark}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{@{}lcccccccc@{}}
@@ -321,25 +264,11 @@ Table~\ref{tab:cv_hardware_benchmark} reports comprehensive computer vision metr
 }
 \end{table}
 
-\subsection{The Pre-training Compute and Dataset Disparity}
+Despite training exclusively on MOT16 (5,316 frames) compared to YOLO26n's full MS COCO pretraining (118,287 images), CSN-V3 achieves \textbf{70.0\% recall} and \textbf{50.19 F1/M-Param} (+70.7\% information density) at $1.98\times$ fewer parameters, with register-level fused CUDA kernels delivering real-time throughput (54.98 ms / 18.2 FPS).
 
-A critical consideration in evaluating Table~\ref{tab:cv_hardware_benchmark} is the \textbf{massive disparity in pre-training scale}:
-\begin{enumerate}[leftmargin=*]
-    \item \textbf{YOLO26n Pre-training Scale}: The standard YOLO26n baseline is pre-trained on the full \textbf{MS COCO dataset (118,287 images, $>860,000$ labeled object instances across 80 categories)} for 500 epochs utilizing high-throughput multi-GPU compute clusters (thousands of GPU-hours), followed by calibrated fine-tuning on MOT16.
-    \item \textbf{CSN-V3 Incomparably Smaller Budget}: In stark contrast, CSN-V3 was trained \textbf{directly from scratch on MOT16 alone (merely 5,316 video frames across 7 training sequences)} for only 20 epochs on a \textbf{single consumer GPU (GTX 1660 Ti)} in a few hours. 
-\end{enumerate}
-This represents an asymmetry of over \textbf{22$\times$ fewer images, $>100\times$ fewer training iterations, and $>1000\times$ less total compute budget}. Despite this immense disadvantage, CSN-V3 achieves:
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Superior Pedestrian Recall}: Reaches \textbf{70.0\% recall} (+4.6\% higher than calibrated YOLO26n's 65.4\%), demonstrating that continuous Clifford Lie rotations capture occluded pedestrian silhouettes without requiring millions of synthetic bounding boxes.
-    \item \textbf{Exceptional Parameter Efficiency}: Achieves an Information Density of \textbf{50.19 F1 per million parameters} (\textbf{+70.7\% higher than YOLO26n's 29.39}) with \textbf{1.98$\times$ fewer parameters} (1.29M vs. 2.57M).
-    \item \textbf{Real-Time Fused CUDA Execution}: Driven by native register-level fused CUDA Clifford scan kernels (\texttt{csn\_fast\_scan\_cuda}), CSN-V3 latency drops from 279.5 ms to \textbf{54.98 ms (18.2 FPS)}---a \textbf{5.1$\times$ acceleration} that matches the real-time throughput of standard Euclidean detectors (54.98 ms vs. 46.78 ms for YOLO26n) while operating at half the parameter footprint.
-\end{itemize}
+\section{Real-Hardware Autoregressive Generation Metrics}
 
-\section{Real-Hardware Test-Time Generation Metrics for LM}
-
-While raw training step latency provides basic hardware execution signals, it obscures a fundamental architectural reality: \textbf{Transformers require vastly more training tokens, training iterations, and parameter capacity to reach the same level of accuracy} (the sample efficiency deficit). Consequently, the definitive operational metric for production deployment is \textbf{test-time autoregressive token generation speed (tokens/second) and per-token generation latency across extending context lengths $L$}.
-
-To evaluate deployment performance on consumer-grade hardware, all architectures were benchmarked on a single \textbf{NVIDIA GeForce GTX 1660 Ti (6 GB VRAM, Turing TU116 architecture)} under identical PyTorch 2.6 CUDA execution environments. Table~\ref{tab:gtx1660ti_benchmarks} reports measured autoregressive generation throughput as context length scales from $L = 128$ to $L = 2048$, alongside state memory characteristics.
+Table~\ref{tab:gtx1660ti_benchmarks} reports measured autoregressive generation throughput on GTX 1660 Ti across context horizons $L \in [128, 2048]$.
 
 \begin{table}[htbp]
 \centering
@@ -360,23 +289,49 @@ Liquid CfC (2L, $h=64$) & 86,400 & 36.80\% (Sub-Par) & 39.0 tok/s & 36.2 tok/s &
 }
 \end{table}
 
-Crucially, at \textbf{Iso-Accuracy Parity} (where both models reach $\approx 50\%$ Top-1 Accuracy), \textbf{CSN-LM consistently outperforms the Scaled Transformer in test-time generation speed across all context lengths}:
+At iso-accuracy parity, CSN-LM $\Cl(6, 0)$ generates at \textbf{301.0 tokens/second} at $L=2048$ ($1.54\times$ speedup over the Scaled Transformer at 195.6 tok/s), while maintaining a strictly flat $\mathcal{O}(1)$ state memory footprint ($\sim 21$ MB).
+
+\section{The Interconnect Bottleneck and Future Directions: Port-Hamiltonian Interconnections (PHS)}
+
+\subsection{Diagnosing the Interconnect Bottleneck in v1}
+
+A primary analytical insight emerging from the v1 implementation of Clifford Space Networks concerns the disparity between internal neuronal capacity and inter-layer communication:
+\begin{quote}
+\textit{Information-Dense Neurons vs. Euclidean Linear Pipes}: Each Clifford neuron operates as a high-dimensional geometric entity containing a full multivector sub-algebra with up to 256 degrees of freedom. However, in the current v1 architecture, inter-neuron feature mixing is mediated by standard Euclidean linear projection weights $W$.
+\end{quote}
+This mismatch creates an \textbf{interconnect bottleneck}: dense, geometrically structured multivector representations are forced through flat Euclidean projections, disrupting geometric coherence and inducing representation bottlenecks across deep stacks.
+
+\subsection{Toward Port-Hamiltonian Systems (PHS) for Inter-Neuron Coupling}
+
+To resolve this interconnect deficit without resorting to ad-hoc projection matrices, future iterations of CSN will formulate the inter-neuron connection graph as a \textbf{Port-Hamiltonian System (PHS)}~\cite{vanderschaft2014port}.
+
+In port-Hamiltonian theory, dynamic energy exchange between interconnected subsystems is governed by skew-symmetric Dirac structures and power-conserving ports:
+\begin{equation}
+    \begin{pmatrix} \dot{x} \\ y \end{pmatrix} = \begin{pmatrix} J(x) - R(x) & G(x) \\ -G^T(x) & 0 \end{pmatrix} \begin{pmatrix} \nabla H(x) \\ u \end{pmatrix}
+\end{equation}
+where:
+\begin{itemize}[leftmargin=*]
+    \item $H(x) \ge 0$ is the internal Hamiltonian energy stored within each Clifford multivector neuron;
+    \item $J(x) = -J^T(x)$ is a skew-symmetric interconnection matrix representing lossless energetic and rotational communication between neurons;
+    \item $R(x) \succeq 0$ governs physical dissipation (conductance decay), ensuring strict Lyapunov passivity ($\dot{H} \le y^T u$);
+    \item $(u, y)$ are effort-flow port variables enabling modular interconnectivity.
+\end{itemize}
+By replacing Euclidean linear projections with port-Hamiltonian coupling, inter-neuron communication will preserve bivector invariants and guarantee unconditional stability across arbitrary depth, unifying discrete associative scans with continuous physical dynamics.
+
+\subsection{Research Roadmap: BabyLM 100M, TinyStories, and ImageNet}
+
+To extend beyond the initial feasibility proofs established in this work, our active experimental agenda focuses on:
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Generative Throughput Advantage}: CSN-LM $\Cl(6, 0)$ generates up to \textbf{301.0 tokens/second} at $L=2048$, delivering a \textbf{1.54$\times$ generation speedup} over the Scaled Transformer (195.6 tok/s), while operating with \textbf{15$\times$ fewer parameters}. CSN-LM Master $\Cl(8, 0)$ maintains \textbf{259.0 tokens/second} at $L=2048$ (\textbf{1.32$\times$ faster than Scaled Transformer}) at a \textbf{19.7$\times$ parameter reduction}.
-    \item \textbf{Strict $\mathcal{O}(1)$ State Memory}: The state memory of CSN-LM remains strictly constant at $\sim 21$ MB across context horizons extending to $L=4096$, entirely bypassing the exploding memory curve and latency degradation of Transformer KV-caches.
-    \item \textbf{Superiority over Recurrent Competitors}: CSN-LM generates tokens \textbf{2.5$\times$ to 3.2$\times$ faster than Mamba S6} (259 vs. 81 tok/s at $L=2048$) and \textbf{6.6$\times$ to 9.3$\times$ faster than Liquid CfC} (259 vs. 28 tok/s).
+    \item \textbf{Standardized Language Benchmarks}: Evaluating CSN against modern LLaMA-style architectures (RoPE + RMSNorm + SwiGLU) and Mamba SSMs across the \textbf{BabyLM Challenge (10M / 100M)} and \textbf{TinyStories} datasets on high-throughput NVIDIA RTX 4090 platforms.
+    \item \textbf{Spatial Scaling to ImageNet-1k}: Progressing from MOT16 pedestrian detection to full-scale hierarchical visual classification on ImageNet-1k to evaluate how dual-grade Clifford rotors scale against Vision Transformers (ViT) and modern ConvNets.
+    \item \textbf{Hardware-Native PHS Kernels}: Developing register-fused CUDA kernels for Port-Hamiltonian Dirac interconnections.
 \end{enumerate}
 
-\paragraph{Implementation and Hardware Note.}
-The experimental benchmarks in this work were conducted on a single consumer-grade desktop platform featuring an NVIDIA GeForce GTX 1660 Ti (6 GB VRAM, Turing TU116 architecture) and an Intel Core i5-9400F processor. This hardware profile was deliberately chosen as an empirical testbed to demonstrate the architectural feasibility, algorithmic robustness, and extreme sample and memory efficiency of Clifford Space Networks under strict compute and VRAM constraints. Rather than obscuring inductive efficiency behind high-performance multi-node clusters, this setup confirms that non-abelian Lie rotor operations remain lightweight and deployable on resource-constrained edge and desktop hardware. Building upon the verified sample efficiency and sub-quadratic scaling demonstrated here, large-scale multi-node pre-training experiments on broader corpora (such as SlimPajama and WikiText-103) are currently underway.
+\section{Conclusion}
 
-\section{Conclusion and Future Directions}
+This paper has presented Version 1 of Clifford Space Networks (CSN), introducing continuous non-abelian Lie rotor scans as an analytically grounded, sub-quadratic alternative to unconstrained Euclidean networks. 
 
-This paper has presented Clifford Space Networks (CSN), formulating continuous non-abelian Lie rotor transformations, parallel associative scans, and Riemannian contact manifold geodesics as a unified foundation for artificial intelligence.
-
-Crucially, \textbf{this work marks only the inception of a broader geometric research program}. As demonstrated in the sequence modeling evaluations, the Clifford non-commutative formulation exhibits \textbf{extraordinary parameter efficiency in sequential context-window tasks}, achieving parity with Transformers using \textbf{$19.7\times$ fewer parameters} and overcoming the commutative limitations of diagonal state-space models. Furthermore, the vision experiments establish that \textbf{even on static 2D vision backbones, Clifford geometric architectures can be brought to a highly competitive state with established Euclidean baselines} while operating at a fraction of their parameter footprint, despite having trained with over $1000\times$ less compute than standard baselines.
-
-Future research directions include developing native fused CUDA bivector kernels for executing multivector operations directly in warp registers, scaling CSN-LM from character-level benchmarks to large-scale multi-billion-token pretraining corpora, and extending CSN vision architectures to comprehensive multi-class object detection. By fundamentally departing from flat vector assumptions in favor of coordinate-free geometric algebras, Clifford Space Networks pave the way toward a unified, sub-quadratic, and geometrically rigorous foundation for artificial intelligence.
+By grounding state transitions in the rational Cayley transform on $\mathrm{Spin}(n)$ and establishing strict algebraic isometry, CSN demonstrates remarkable sample efficiency and constant inference memory on compact feasibility benchmarks. Crucially, this work represents the foundational stage of a broader research trajectory. By explicitly identifying the inter-neuron communication bottleneck and proposing Port-Hamiltonian Dirac structures as the next evolutionary step, Clifford Space Networks offer a mathematically rigorous path toward analytical graph reasoning, physical system modeling, and scalable geometric intelligence.
 
 \bibliographystyle{plain}
 \bibliography{references}

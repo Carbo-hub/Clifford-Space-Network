@@ -46,7 +46,7 @@ This work introduces \textbf{Clifford Space Networks (CSN)}, an analytical geome
     \item \textbf{Sequence Feasibility (CSN-LM)}: On the Tiny Shakespeare benchmark, CSN-LM $\Cl(8, 0)$ reaches \textbf{50.50\% Top-1 Accuracy} (PPL 5.46) with only \textbf{158,164 parameters}, matching the accuracy of a 1.90M parameter Scaled Transformer (\textbf{19.7$\times$ parameter reduction}) and demonstrating up to \textbf{1.54$\times$ faster test-time token generation} at $\mathcal{O}(1)$ state memory ($\sim 21$ MB). While these compact results confirm exceptional sample efficiency, large-scale multi-billion-token benchmarks (BabyLM 10M/100M, TinyStories) are currently underway to evaluate regimes where attention mechanisms traditionally scale.
     \item \textbf{Spatial Feasibility (CSN-V3)}: On MOT16 pedestrian detection, CSN-V3 achieves \textbf{70.0\% recall} and \textbf{50.19 F1 per million parameters} at 1.29M parameters ($1.98\times$ fewer than YOLO26n) with native fused CUDA scan kernels operating at real-time speeds (54.98 ms / 18.2 FPS on a consumer GTX 1660 Ti).
 \end{enumerate}
-Finally, we position CSN primarily as an \textbf{analytical solver for formal logic graphs and physical Hamiltonian systems}, diagnose the \textbf{interconnect bottleneck} of information-dense Clifford neurons, and outline a principled architectural evolution toward \textbf{Port-Hamiltonian Interconnections (PHS)} and full-scale ImageNet benchmarks.
+Finally, we position CSN primarily as an \textbf{analytical solver for formal logic graphs and physical Hamiltonian systems}. We define the immediate \textbf{v2 roadmap} focused strictly on empirical scaling across standard corpora (BabyLM, TinyStories, ImageNet) and new modalities, while mapping out long-term theoretical horizons including \textbf{Port-Hamiltonian Interconnections (PHS)} to resolve the neuron interconnect bottleneck, and \textbf{orbifold quotient geometries} for critical singularities.
 \end{abstract}
 
 \section{Introduction}
@@ -81,7 +81,7 @@ However, a fundamental architectural distinction separates CSN from prior litera
 \begin{itemize}[leftmargin=*]
     \item \textbf{Target Domain}: Prior Clifford networks focus almost exclusively on static spatial symmetry groups ($O(n), E(n)$) or surrogate modelling for continuous Partial Differential Equations (e.g., fluid dynamics, weather forecasting). In contrast, CSN targets \textbf{sub-quadratic dynamic sequence modeling and state space transitions}.
     \item \textbf{Transition Mechanics}: While previous works apply static geometric products of multivector weights ($W \star x$), CSN formulates recurrent state updates via the \textbf{rational Cayley transform} on Lie algebras $\mathfrak{so}(n) \to \mathrm{Spin}(n)$.
-    \item \textbf{Associative Scans}: Prior multivector architectures do not formulate causal temporal recurrences or require $\mathcal{O}(L^2)$ attention (as in GATr). CSN derives an exact affine closed form that admits a \textbf{parallel prefix scan in $\mathcal{O}(L \log L)$} and registers-level fused GPU kernels.
+    \item \textbf{Associative Scans}: Prior multivector architectures do not formulate causal temporal recurrences or require $\mathcal{O}(L^2)$ attention (as in GATr). CSN derives an exact affine closed form that admits a \textbf{parallel prefix scan in $\mathcal{O}(L \log L)$} and register-level fused GPU kernels.
 \end{itemize}
 
 \subsection{Primary Orientation: Analytical Graph and Physical Solvers}
@@ -96,7 +96,7 @@ While standard deep learning architectures approximate tasks through statistical
 
 This work constitutes a \textbf{Version 1 (v1) architectural feasibility study}. The empirical benchmarks presented herein validate that non-abelian Lie rotor scans can be executed with exact isometry, sub-quadratic training, and constant inference memory. 
 
-We explicitly acknowledge that while CSN demonstrates remarkable parameter efficiency on compact benchmarks, standard Transformers possess established scaling properties that emerge at multi-billion-token scales. Systematic evaluations on standardized corpora (BabyLM 10M/100M, TinyStories) and scaling spatial vision to ImageNet-1k are under active execution to characterize asymptotic scaling laws.
+We explicitly acknowledge that while CSN demonstrates remarkable parameter efficiency on compact benchmarks, standard Transformers possess established scaling properties that emerge at multi-billion-token scales. Systematic evaluations on standardized corpora (BabyLM 10M/100M, TinyStories) and scaling spatial vision to ImageNet-1k represent the concrete scope of the upcoming v2 phase.
 
 \section{Mathematical Foundations: Clifford Algebras and Lie Rotors}
 
@@ -291,47 +291,38 @@ Liquid CfC (2L, $h=64$) & 86,400 & 36.80\% (Sub-Par) & 39.0 tok/s & 36.2 tok/s &
 
 At iso-accuracy parity, CSN-LM $\Cl(6, 0)$ generates at \textbf{301.0 tokens/second} at $L=2048$ ($1.54\times$ speedup over the Scaled Transformer at 195.6 tok/s), while maintaining a strictly flat $\mathcal{O}(1)$ state memory footprint ($\sim 21$ MB).
 
-\section{The Interconnect Bottleneck and Future Directions: Port-Hamiltonian Interconnections (PHS)}
+\section{Roadmap and Future Architectural Horizons}
 
-\subsection{Diagnosing the Interconnect Bottleneck in v1}
+\subsection{Phase 2 (v2) Agenda: Empirical Scaling and Benchmark Generalization}
 
-A primary analytical insight emerging from the v1 implementation of Clifford Space Networks concerns the disparity between internal neuronal capacity and inter-layer communication:
-\begin{quote}
-\textit{Information-Dense Neurons vs. Euclidean Linear Pipes}: Each Clifford neuron operates as a high-dimensional geometric entity containing a full multivector sub-algebra with up to 256 degrees of freedom. However, in the current v1 architecture, inter-neuron feature mixing is mediated by standard Euclidean linear projection weights $W$.
-\end{quote}
-This mismatch creates an \textbf{interconnect bottleneck}: dense, geometrically structured multivector representations are forced through flat Euclidean projections, disrupting geometric coherence and inducing representation bottlenecks across deep stacks.
+Rather than coupling architectural complexity prematurely, the concrete scope of the upcoming \textbf{Version 2 (v2)} iteration is defined strictly around systematic empirical scaling:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Standardized Sequence Benchmarks}: Evaluating CSN against contemporary LLaMA-style architectures (RoPE + RMSNorm + SwiGLU) and Mamba SSMs across the standardized \textbf{BabyLM Challenge (10M / 100M)} and \textbf{TinyStories} datasets on high-throughput NVIDIA RTX 4090 hardware.
+    \item \textbf{Spatial Scaling to ImageNet-1k}: Progressing from MOT16 pedestrian detection to full-scale hierarchical visual classification on ImageNet-1k to evaluate how dual-grade Clifford backbones scale relative to Vision Transformers (ViT) and modern ConvNets.
+    \item \textbf{Cross-Task Generalization}: Evaluating CSN across continuous time-series forecasting and physical trajectory prediction.
+\end{enumerate}
 
-\subsection{Toward Port-Hamiltonian Systems (PHS) for Inter-Neuron Coupling}
+\subsection{Long-Term Horizon: Port-Hamiltonian Interconnections (PHS)}
 
-To resolve this interconnect deficit without resorting to ad-hoc projection matrices, future iterations of CSN will formulate the inter-neuron connection graph as a \textbf{Port-Hamiltonian System (PHS)}~\cite{vanderschaft2014port}.
+A primary structural finding from this v1 study is the \textbf{interconnect bottleneck}: each Clifford neuron possesses high internal geometric dimensionality (up to 256 multivector degrees of freedom), yet inter-neuron communication is mediated by standard flat Euclidean projection matrices $W$. 
 
-In port-Hamiltonian theory, dynamic energy exchange between interconnected subsystems is governed by skew-symmetric Dirac structures and power-conserving ports:
+To address this limitation in future major iterations, a principled long-term research direction is the formulation of inter-neuron coupling via \textbf{Port-Hamiltonian Systems (PHS)}~\cite{vanderschaft2014port}:
 \begin{equation}
     \begin{pmatrix} \dot{x} \\ y \end{pmatrix} = \begin{pmatrix} J(x) - R(x) & G(x) \\ -G^T(x) & 0 \end{pmatrix} \begin{pmatrix} \nabla H(x) \\ u \end{pmatrix}
 \end{equation}
-where:
-\begin{itemize}[leftmargin=*]
-    \item $H(x) \ge 0$ is the internal Hamiltonian energy stored within each Clifford multivector neuron;
-    \item $J(x) = -J^T(x)$ is a skew-symmetric interconnection matrix representing lossless energetic and rotational communication between neurons;
-    \item $R(x) \succeq 0$ governs physical dissipation (conductance decay), ensuring strict Lyapunov passivity ($\dot{H} \le y^T u$);
-    \item $(u, y)$ are effort-flow port variables enabling modular interconnectivity.
-\end{itemize}
-By replacing Euclidean linear projections with port-Hamiltonian coupling, inter-neuron communication will preserve bivector invariants and guarantee unconditional stability across arbitrary depth, unifying discrete associative scans with continuous physical dynamics.
+where $H(x) \ge 0$ represents the internal Hamiltonian energy of multivector states, $J(x) = -J^T(x)$ is a skew-symmetric Dirac structure preserving rotational energy during inter-neuron exchange, $R(x) \succeq 0$ provides dissipation ensuring Lyapunov passivity ($\dot{H} \le y^T u$), and $(u, y)$ are port variables. Formulating network depth as power-conserving Dirac interconnections provides an analytical foundation to eliminate the interconnect bottleneck.
 
-\subsection{Research Roadmap: BabyLM 100M, TinyStories, and ImageNet}
+\subsection{Fundamental Theoretical Frontier: Orbifold Geometries for Critical Singularities}
 
-To extend beyond the initial feasibility proofs established in this work, our active experimental agenda focuses on:
-\begin{enumerate}[leftmargin=*]
-    \item \textbf{Standardized Language Benchmarks}: Evaluating CSN against modern LLaMA-style architectures (RoPE + RMSNorm + SwiGLU) and Mamba SSMs across the \textbf{BabyLM Challenge (10M / 100M)} and \textbf{TinyStories} datasets on high-throughput NVIDIA RTX 4090 platforms.
-    \item \textbf{Spatial Scaling to ImageNet-1k}: Progressing from MOT16 pedestrian detection to full-scale hierarchical visual classification on ImageNet-1k to evaluate how dual-grade Clifford rotors scale against Vision Transformers (ViT) and modern ConvNets.
-    \item \textbf{Hardware-Native PHS Kernels}: Developing register-fused CUDA kernels for Port-Hamiltonian Dirac interconnections.
-\end{enumerate}
+As a distinct, long-term theoretical frontier, future foundational work will investigate extending state manifolds from smooth Riemannian spaces to \textbf{orbifold quotients} $\mathcal{O} = \mathcal{Cl}(p, q) / \Gamma$, where $\Gamma \subset \mathrm{Spin}(n)$ is a discrete symmetry subgroup.
+
+Smooth manifolds are locally Euclidean and inherently lack singular points. Consequently, when neural models encounter critical bifurcations, phase transitions, or discrete logical branch points, smooth parameterizations often exhibit gradient instability. In contrast, orbifolds naturally accommodate cone-point singularities and fold redundant symmetric state volumes into dense quotient fundamental domains. Extending Clifford multivectors to orbifold structures constitutes a rich, standalone mathematical research program to amplify parameter density and stabilize critical edge cases.
 
 \section{Conclusion}
 
 This paper has presented Version 1 of Clifford Space Networks (CSN), introducing continuous non-abelian Lie rotor scans as an analytically grounded, sub-quadratic alternative to unconstrained Euclidean networks. 
 
-By grounding state transitions in the rational Cayley transform on $\mathrm{Spin}(n)$ and establishing strict algebraic isometry, CSN demonstrates remarkable sample efficiency and constant inference memory on compact feasibility benchmarks. Crucially, this work represents the foundational stage of a broader research trajectory. By explicitly identifying the inter-neuron communication bottleneck and proposing Port-Hamiltonian Dirac structures as the next evolutionary step, Clifford Space Networks offer a mathematically rigorous path toward analytical graph reasoning, physical system modeling, and scalable geometric intelligence.
+By grounding state transitions in the rational Cayley transform on $\mathrm{Spin}(n)$ and establishing strict algebraic isometry, CSN demonstrates remarkable sample efficiency and constant inference memory on compact feasibility benchmarks. While Version 2 focuses squarely on empirical scaling across standard corpora (BabyLM, TinyStories, ImageNet), this work establishes a rigorous mathematical foundation and charts clear long-term horizons toward Port-Hamiltonian interconnections and orbifold geometries.
 
 \bibliographystyle{plain}
 \bibliography{references}

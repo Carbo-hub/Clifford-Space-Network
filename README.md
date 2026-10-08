@@ -11,14 +11,15 @@
 
 ## 📌 Executive Summary (v1 Feasibility Study)
 
-**Clifford Space Networks (CSN)** formulate an analytical geometric computing paradigm that elevates state representations into **graded Clifford multivector algebras** $\mathcal{Cl}(p, q)$ and parameterizes state transitions via the continuous **non-abelian Spinor Lie group** $\mathrm{Spin}(n)$. 
+**Clifford Space Networks (CSN)** formulate an analytical geometric computing paradigm that elevates state representations into **graded Clifford multivector algebras** $\mathcal{Cl}(p, q)$ and parameterizes recurrent state transitions via the continuous **non-abelian Spinor Lie group** $\mathrm{Spin}(n)$. 
 
-Unlike existing Clifford neural networks designed as static PDE surrogates for 3D physics, CSN is architected as an **analytical solver for non-commutative logic graphs and physical Hamiltonian systems**, enabling exact sub-quadratic state transitions ($\mathcal{O}(L \log L)$ parallel associative scan, $\mathcal{O}(1)$ autoregressive generation memory).
+Unlike existing Clifford neural networks designed as static PDE surrogates for 3D physics, CSN is architected primarily as an **analytical solver for non-commutative logic graphs and physical Hamiltonian systems**, enabling exact sub-quadratic state transitions ($\mathcal{O}(L \log L)$ parallel associative scan, $\mathcal{O}(1)$ autoregressive generation memory).
 
 **Current v1 Status & Feasibility Proofs**:
-- **Dynamic Context-Window Systems (CSN-LM)**: Validated on Tiny Shakespeare, achieving 50.50% Top-1 accuracy with **$19.7\times$ fewer parameters** (158k vs. 1.90M) and **$1.54\times$ faster token generation** than Scaled Transformers with $\mathcal{O}(1)$ memory ($\approx 21$ MB). Large-scale evaluations on BabyLM 10M/100M and TinyStories are in progress to evaluate asymptotic multi-billion-token regimes where attention mechanisms traditionally scale.
-- **Static Spatial Structures (CSN-V3)**: Validated on MOT16 pedestrian detection with **$1.98\times$ fewer parameters** than YOLO26n and **$+70.7\%$ higher information density** at real-time speeds (54.98 ms / 18.2 FPS) using register-level fused CUDA scan kernels. Full-scale hierarchical scaling to ImageNet-1k is under active development.
-- **Identified v1 Bottleneck & Roadmap**: We diagnose the *interconnect bottleneck* of information-dense Clifford neurons and introduce **Port-Hamiltonian Interconnections (PHS)** as the architectural foundation for v2.
+- **Dynamic Sequence Modeling (CSN-LM)**: Validated on Tiny Shakespeare, reaching 50.50% Top-1 accuracy with **$19.7\times$ fewer parameters** (158k vs. 1.90M) and **$1.54\times$ faster token generation** than Scaled Transformers with $\mathcal{O}(1)$ memory ($\approx 21$ MB). While these compact results confirm exceptional sample efficiency, large-scale multi-billion-token benchmarks (BabyLM 10M/100M, TinyStories) are currently underway to evaluate regimes where attention mechanisms traditionally scale.
+- **Static Spatial Perception (CSN-V3)**: Validated on MOT16 pedestrian detection with **$1.98\times$ fewer parameters** than YOLO26n and **$+70.7\%$ higher information density** at real-time speeds (54.98 ms / 18.2 FPS) using register-level fused CUDA scan kernels. Hierarchical scaling to ImageNet-1k is under active development.
+- **Interconnect Bottleneck Diagnosis**: We identify a core architectural challenge: the *interconnect bottleneck* between information-dense multivector neurons (up to 256 degrees of freedom) and flat Euclidean linear projection weights.
+- **Structured Development Roadmap**: Version 1 establishes the mathematical feasibility proof; Version 2 focuses strictly on empirical scaling and benchmark formation; Port-Hamiltonian Interconnections (PHS) and Orbifold Geometries ($\mathcal{M}/\Gamma$) constitute long-term theoretical horizons.
 
 ```
                            Foundational Architectural Comparison
@@ -36,15 +37,23 @@ Unlike existing Clifford neural networks designed as static PDE surrogates for 3
 
 ---
 
-## 🌐 CSN as a Universal Inductive Bias for Artificial Intelligence
+## 🔬 Distinction from Prior Clifford Neural Networks
 
-Clifford Space Networks provide a universal mathematical language capable of translating all modern neural network architectures into coordinate-free geometric spaces:
+The integration of Clifford algebras into deep learning has gained traction through Clifford Neural Layers for PDE modeling (Brandstetter et al., 2022/2023), Geometric Clifford Algebra Networks (Ruhe et al., 2023), and Geometric Algebra Transformers (Brehmer et al., 2023). However, foundational architectural differences set CSN apart:
 
-1. **Dynamic Context-Window & Autoregressive AI**: Large language models, code generation, streaming speech processing, and financial time-series benefit from non-abelian Lie rotor memory, which prevents commutative state collapse ($A_t A_{t-1} = A_{t-1} A_t$) without quadratic attention costs.
-2. **Multimodal Perception & Spatial AI**: Computer vision, video temporal understanding, 3D point clouds, NeRFs, and 3D Gaussian Splatting natively map to graded multivectors, learning spatial rotations and reflections intrinsically without synthetic data augmentations.
-3. **Physical AI & Scientific Machine Learning**: Partial differential equation solvers (Navier-Stokes fluid mechanics, Maxwell electromagnetism), molecular dynamics, protein conformation modeling, and Hamiltonian/Lagrangian quantum many-body systems naturally express physical conservation laws in Clifford algebras.
-4. **Autonomous Decision-Making & Embodied AI**: Continuous reinforcement learning, robotic manipulator kinematics, quadruped locomotion, and autonomous driving state estimation operate on Lie groups ($\mathrm{SE}(3)$, $\mathrm{SO}(3)$), making continuous rotor dynamics the native state representation.
-5. **Relational & Topological AI**: Hyperbolic and non-abelian knowledge graph embeddings, complex biological networks, and drug-target interaction graphs.
+1. **Target Modality**: Prior Clifford models focus on static spatial equivariance ($O(n), E(n)$) or continuous PDE surrogates (fluid dynamics, weather). CSN addresses **sub-quadratic dynamic sequence modeling and state space transitions**.
+2. **Transition Mechanism**: While prior works utilize static multivector weight multiplication ($W \star x$), CSN formulates recurrent state updates via the **rational Cayley transform** on Lie algebras $\mathfrak{so}(n) \to \mathrm{Spin}(n)$.
+3. **Associative Parallel Scans**: Prior multivector architectures do not formulate causal temporal recurrences or require $\mathcal{O}(L^2)$ attention (as in GATr). CSN derives an exact affine closed form admitting a **parallel prefix scan in $\mathcal{O}(L \log L)$** with register-level fused GPU kernels.
+
+---
+
+## 🌐 Primary Orientation: Analytical Graph and Physical Solvers
+
+While standard deep learning architectures approximate tasks through statistical pattern matching on unconstrained Euclidean tensors, Clifford Space Networks were conceived as an **analytical engine**:
+
+1. **Analytical Logic Graph Solvers**: In formal logic, causal dependency networks, and knowledge graphs, relations are non-commutative and structured. By mapping entities to multivectors and relations to Spinor Lie rotors $R_{ij} \in \mathrm{Spin}(n)$, logical inference along graph paths reduces to exact algebraic rotor composition without geometric distortion.
+2. **Physical System Modeling and Gauge Invariants**: Physical conservation laws (Hamiltonian mechanics, Maxwell's electrodynamics $F = E + I c B$, and gauge field theories) are natively expressed via differential forms and bivectors. CSN operates directly on the Lie group $\mathrm{Spin}(n)$ with strict algebraic norm preservation, providing a natural inductive bias for physical dynamical systems.
+3. **Sequence and Spatial Perception**: Compact, sub-quadratic representation of temporal sequence order and spatial orientations without quadratic attention overhead.
 
 ---
 
@@ -57,7 +66,7 @@ Because recurrent states are coupled inside non-linear saturating functions ($\t
 In contrast, CSN derives an **exact algebraic closed form** on the Lie group $\mathrm{Spin}(n)$ via the **rational Cayley transform** on the Lie algebra $\mathfrak{so}(n)$:
 $$\Omega_t = \frac{1}{2} B_t \Delta t, \quad R_t = (I + \Omega_t)(I - \Omega_t)^{-1} \in \mathrm{Spin}(n)$$
 $$h_t = \sqrt{\alpha_t} R_t h_{t-1} + (1 - \alpha_t) S_t \equiv M_t h_{t-1} + C_t$$
-**Why Clifford Closed Form is Superior:**
+**Theoretical Properties of Clifford Closed Form:**
 - **Exact Lie Group Isometry**: The Cayley transform is an exact algebraic bijection from $\mathfrak{so}(n)$ onto $\mathrm{Spin}(n)$, guaranteeing $\|R_t v\| = \|v\|$ and unit spectral radius by geometric construction (no vanishing/exploding gradients).
 - **Strict Associativity**: $(M_j, C_j) \circ (M_i, C_i) = (M_j M_i, M_j C_i + C_j)$ enables parallel prefix scans in $\mathcal{O}(L \log L)$ time and fused GPU kernels.
 
@@ -136,6 +145,29 @@ All vision architectures were benchmarked on a single consumer GPU (**NVIDIA GeF
 2. **Superior Pedestrian Recall Under Data Scarcity**: Despite training with **$>22\times$ less data and $>1000\times$ less compute**, CSN-V3 achieves **70.0% pedestrian recall** (+4.6% higher than calibrated YOLO26n's 65.4%), demonstrating that continuous Lie rotor rotations capture articulated pedestrian geometries without requiring millions of augmented training images.
 3. **$+70.7\%$ Higher Information Density**: CSN-V3 delivers **50.19 F1 per million parameters** vs. 29.39 for YOLO26n, while operating with **$1.98\times$ fewer parameters** (1.29M vs. 2.57M).
 4. **Real-Time Fused CUDA Throughput**: Utilizing native register-level fused CUDA Clifford scan kernels (`csn_fast_scan_cuda`), CSN-V3 accelerates by **$5.1\times$** over un-fused PyTorch loops (from 279.5 ms to **54.98 ms / 18.2 FPS**), running at virtually identical latency to standard Euclidean detectors (54.98 ms vs. 46.78 ms) on a consumer GPU.
+
+---
+
+## 🗺️ Architectural Roadmap & Research Horizons
+
+The evolution of Clifford Space Networks is structured across three clearly delineated tiers:
+
+### 1. Phase 1 (v1 — Current Feasibility Study)
+- **Foundational Operator**: Formulate recurrent state transitions via the rational Cayley transform on $\mathfrak{so}(n) \to \mathrm{Spin}(n)$ with strict algebraic isometry.
+- **Sub-Quadratic Execution**: Realize $\mathcal{O}(L \log L)$ associative parallel prefix scans and $\mathcal{O}(1)$ autoregressive generation memory with fused CUDA acceleration.
+- **Feasibility Verification**: Validate compact parameter efficiency on Tiny Shakespeare (sequence modeling) and MOT16 (spatial vision).
+- **Bottleneck Diagnosis**: Identify and formalize the *interconnect bottleneck* arising from coupling dense multivector neurons through flat Euclidean linear projection matrices.
+
+### 2. Phase 2 (v2 — Empirical Scaling & Benchmark Formation)
+- **Standardized Sequence Benchmarks**: Train and evaluate CSN against modern LLaMA-style architectures (RoPE, RMSNorm, SwiGLU) and Mamba SSMs across the **BabyLM Challenge (10M / 100M)** and **TinyStories** on high-throughput NVIDIA RTX 4090 hardware.
+- **Spatial Perception Scaling**: Progress from MOT16 pedestrian detection to full-scale hierarchical visual classification on **ImageNet-1k** to evaluate asymptotic scaling against Vision Transformers (ViT) and modern ConvNets.
+- **Cross-Task Generalization**: Evaluate CSN on continuous physical trajectory forecasting and formal logic graph reasoning.
+
+### 3. Long-Term Horizons & Fundamental Theory
+- **Port-Hamiltonian Interconnections (PHS)**: Replace flat linear projection matrices $W$ with skew-symmetric Dirac structures and modular power-conserving ports:
+  $$\begin{pmatrix} \dot{x} \\ y \end{pmatrix} = \begin{pmatrix} J(x) - R(x) & G(x) \\ -G^T(x) & 0 \end{pmatrix} \begin{pmatrix} \nabla H(x) \\ u \end{pmatrix}$$
+  where $J = -J^T$ enables lossless rotational energy exchange between multivector neurons and $R \succeq 0$ ensures strict Lyapunov passivity ($\dot{H} \le y^T u$), solving the neuron interconnect bottleneck without representation distortion.
+- **Orbifold Geometries ($\mathcal{M}/\Gamma$)**: Extend state manifolds from smooth Riemannian spaces to quotient orbifolds $\mathcal{O} = \mathcal{Cl}(p, q) / \Gamma$ under discrete symmetry subgroups $\Gamma \subset \mathrm{Spin}(n)$. Orbifolds naturally accommodate cone-point singularities and discrete logical branch points while folding symmetric state volumes to maximize topological parameter density.
 
 ---
 

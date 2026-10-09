@@ -39,12 +39,12 @@
 \begin{abstract}
 Modern deep learning architectures predominantly map representations to unconstrained Euclidean coordinates in $\mathbb{R}^d$, neglecting coordinate-free geometric invariants and non-commutative compositionality. While Transformer self-attention achieves high expressive capacity, it incurs an irreducible quadratic computational complexity $\mathcal{O}(L^2)$ and an exploding KV-cache memory footprint. Conversely, sub-quadratic State Space Models (SSMs) enforce strictly commutative diagonal transitions ($A_t A_{t-1} = A_{t-1} A_t$), leading to state degeneracy when capturing hierarchical order permutations and non-commutative dependencies.
 
-This work introduces \textbf{Clifford Space Networks (CSN)}, an analytical geometric framework founded on Clifford multivector algebras $\Cl(p, q)$ and continuous \textbf{non-abelian} Lie rotor groups $\mathrm{Spin}(n)$. Unlike existing Clifford neural networks designed primarily for static PDE surrogates and spatial equivariance, CSN formulates recurrent state transitions as isometric Lie group rotations via the rational Cayley transform, executing in strictly sub-quadratic time through an $\mathcal{O}(L \log L)$ parallel associative scan and $\mathcal{O}(1)$ autoregressive generation memory. 
+This work introduces \textbf{Clifford Space Networks (CSN)}, an analytical geometric framework founded on Clifford multivector algebras $\Cl(p, q)$ and continuous \textbf{non-abelian} Lie rotor groups $\mathrm{Spin}(n)$. Unlike existing Clifford neural networks designed primarily for static PDE surrogates and spatial equivariance, CSN formulates recurrent state transitions as isometric Lie group rotations via the rational Cayley transform, executing in strictly sub-quadratic time through an $\mathcal{O}(L \log L)$ parallel associative scan and $\mathcal{O}(1)$ autoregressive generation memory.
 
-\textbf{As a v1 feasibility study}, this paper validates the core mathematical operator across compact sequence and spatial perception tasks:
+\textbf{As a v1 feasibility study}, this paper validates the core mathematical operator across compact sequence and spatial perception tasks, clearly identifying both operating advantages and specific empirical boundaries:
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Sequence Feasibility (CSN-LM)}: On the Tiny Shakespeare benchmark, CSN-LM $\Cl(8, 0)$ reaches \textbf{50.50\% Top-1 Accuracy} (PPL 5.46) with only \textbf{158,164 parameters}, matching the accuracy of a 1.90M parameter Scaled Transformer (\textbf{19.7$\times$ parameter reduction}) and demonstrating up to \textbf{1.54$\times$ faster test-time token generation} at $\mathcal{O}(1)$ state memory ($\sim 21$ MB). While these compact results confirm exceptional sample efficiency, large-scale multi-billion-token benchmarks (BabyLM 10M/100M, TinyStories) are currently underway to evaluate regimes where attention mechanisms traditionally scale.
-    \item \textbf{Spatial Feasibility (CSN-V3)}: On MOT16 pedestrian detection, CSN-V3 achieves \textbf{70.0\% recall} and \textbf{50.19 F1 per million parameters} at 1.29M parameters ($1.98\times$ fewer than YOLO26n) with native fused CUDA scan kernels operating at real-time speeds (54.98 ms / 18.2 FPS on a consumer GTX 1660 Ti).
+    \item \textbf{Sequence Feasibility (CSN-LM)}: Under low-parameter capacity constraints on the Tiny Shakespeare character benchmark, CSN-LM $\Cl(8, 0)$ reaches \textbf{50.50\% Top-1 Accuracy} (PPL 5.46) with \textbf{158,164 parameters}, matching the accuracy of a 1.90M parameter Scaled Transformer (\textbf{19.7$\times$ parameter reduction}) and demonstrating up to \textbf{1.54$\times$ faster test-time token generation} at long contexts ($L=2048$) with constant $\mathcal{O}(1)$ memory ($\sim 21$ MB). Conversely, standard Transformers maintain higher raw parallel training token throughput due to vendor-optimized BLAS GEMMs, and diagonal SSMs (Mamba) exhibit lower per-step recurrence arithmetic ($d \cdot d_{\mathrm{state}}$ vs. $N D^2$).
+    \item \textbf{Spatial Feasibility (CSN-V3)}: When trained exclusively from scratch on limited domain data (MOT16, 5.3k frames), CSN-V3 achieves \textbf{70.0\% pedestrian recall} and \textbf{50.19 F1 per million parameters} at 1.29M parameters ($1.98\times$ fewer than YOLO26n) with fused CUDA scan kernels operating at real-time speeds (54.98 ms / 18.2 FPS on a GTX 1660 Ti). Conversely, the fully pre-trained YOLO26n baseline (MS COCO 118k images) achieves higher overall F1 (73.60\% vs. 65.06\%), lower forward latency (46.78 ms), and lower peak VRAM (80.7 MB vs. 107.6 MB), reflecting the maturity of 2D convolutional implementations.
 \end{enumerate}
 Finally, we position CSN primarily as an \textbf{analytical solver for formal logic graphs and physical Hamiltonian systems}. We define the immediate \textbf{v2 roadmap} focused strictly on empirical scaling across standard corpora (BabyLM, TinyStories, ImageNet) and new modalities, while mapping out long-term theoretical horizons including \textbf{Port-Hamiltonian Interconnections (PHS)} to resolve the neuron interconnect bottleneck, and \textbf{orbifold quotient geometries} for critical singularities.
 \end{abstract}
@@ -92,11 +92,16 @@ While standard deep learning architectures approximate tasks through statistical
     \item \textbf{Physical System Modeling and Gauge Invariants}: Physical conservation laws (Hamiltonian mechanics, Maxwell's electrodynamics $F = E + I c B$, and gauge field theories) are natively expressed via differential forms and bivectors. CSN operates directly on the Lie group $\mathrm{Spin}(n)$ with strict algebraic norm preservation, providing an inductive bias for physical dynamical systems.
 \end{enumerate}
 
-\subsection{Architectural Scope: v1 Feasibility and the Road to Scale}
+\subsection{Architectural Scope: v1 Feasibility and Operating Boundaries}
 
-This work constitutes a \textbf{Version 1 (v1) architectural feasibility study}. The empirical benchmarks presented herein validate that non-abelian Lie rotor scans can be executed with exact isometry, sub-quadratic training, and constant inference memory. 
+This work constitutes a \textbf{Version 1 (v1) architectural feasibility study}. The empirical benchmarks presented herein validate that non-abelian Lie rotor scans can be executed with exact isometry, sub-quadratic training, and constant inference memory.
 
-We explicitly acknowledge that while CSN demonstrates remarkable parameter efficiency on compact benchmarks, standard Transformers possess established scaling properties that emerge at multi-billion-token scales. Systematic evaluations on standardized corpora (BabyLM 10M/100M, TinyStories) and scaling spatial vision to ImageNet-1k represent the concrete scope of the upcoming v2 phase.
+We explicitly recognize the empirical boundaries of this first iteration:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Established Transformer Scaling}: While CSN demonstrates superior parameter efficiency under compact capacity constraints, standard Transformers benefit from established scaling laws across hundreds of billions of tokens, where self-attention patterns and dense Tensor Core operations remain dominant.
+    \item \textbf{Arithmetic Overhead}: CSN computes per-channel matrix Cayley inversions ($N D^2$), incurring higher per-token arithmetic cost than diagonal SSMs or standard feedforward projections.
+    \item \textbf{Dataset Scope}: The v1 evaluations focus on controlled compact datasets (Tiny Shakespeare, MOT16). Phase 2 (v2) will systematically benchmark against large-scale standardized corpora (BabyLM 10M/100M, TinyStories, ImageNet-1k).
+\end{itemize}
 
 \section{Mathematical Foundations: Clifford Algebras and Lie Rotors}
 
@@ -147,7 +152,7 @@ In contrast to empirical bounding functions on flat vectors~\cite{hasani2022clos
 \begin{equation}
     h_t = \sqrt{\alpha_t} R_t h_{t-1} + (1 - \alpha_t) S_t \equiv M_t h_{t-1} + C_t
 \end{equation}
-where $\alpha_t = \sigma(-\gamma(x_t) \Delta t_t) \in (0, 1)$ is continuous decay, $M_t = \sqrt{\alpha_t} R_t$, and $C_t = (1 - \alpha_t) S_t$. 
+where $\alpha_t = \sigma(-\gamma(x_t) \Delta t_t) \in (0, 1)$ is continuous decay, $M_t = \sqrt{\alpha_t} R_t$, and $C_t = (1 - \alpha_t) S_t$.
 
 Because $(M_j, C_j) \circ (M_i, C_i) = (M_j M_i, M_j C_i + C_j)$ satisfies exact mathematical associativity:
 \begin{equation}
@@ -212,14 +217,14 @@ Mamba S6 (2 layers, $d_{\mathrm{state}}=16$) & 16 (diagonal) & 72,000 & 7.37 & 4
 Liquid CfC (2 layers stacked) & 64 (Euclidean) & 86,400 & 9.12 & 36.80\% & 3.189 \\ \midrule
 \textbf{CSN-LM } $\mathbf{\Cl(4, 0)}$ & 16 ($\mathrm{SO}(4)$ rotors) & 80,802 & 6.36 & 46.23\% & 2.669 \\
 \textbf{CSN-LM } $\mathbf{\Cl(6, 0)}$ & 64 ($\mathrm{SO}(8)$ rotors) & 126,740 & 5.68 & 49.07\% & 2.506 \\
-\textbf{CSN-LM } $\mathbf{\Cl(8, 0)}$ \textbf{(Master)} & \textbf{256 ($\mathrm{SO}(16)$ rotors)} & \textbf{158,164} & \textbf{5.46} & \textbf{50.50\%} & \textbf{2.449} \\ \bottomrule
+\textbf{CSN-LM } $\mathbf{\Cl(8, 0)}$ & \textbf{256 ($\mathrm{SO}(16)$ rotors)} & \textbf{158,164} & \textbf{5.46} & \textbf{50.50\%} & \textbf{2.449} \\ \bottomrule
 \end{tabular}
 }
 \end{table}
 
-\subsection{Iso-Accuracy Scaling Parity}
+\subsection{Iso-Accuracy Scaling Parity and Trade-off Analysis}
 
-To reach the accuracy of CSN-LM with only 158k parameters, a standard Transformer was scaled until matching parity ($\approx 50.0\%$ Top-1 Accuracy, Table~\ref{tab:iso_accuracy}).
+To reach the accuracy of CSN-LM with 158k parameters, a standard Transformer was scaled until matching parity ($\approx 50.0\%$ Top-1 Accuracy, Table~\ref{tab:iso_accuracy}).
 
 \begin{table}[htbp]
 \centering
@@ -237,7 +242,11 @@ Scaled Liquid CfC (2L, $d=128$) & 380,000 & 2.4$\times$ & 7.89 & 40.20\% \\ \bot
 }
 \end{table}
 
-The Transformer requires 1.90 million parameters ($19.7\times$ overhead) to match CSN-LM on this benchmark, highlighting the strong inductive bias of non-abelian rotor memory under strict capacity constraints.
+\textbf{Specific Operating Conditions}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Where CSN Excels}: Under tight capacity budgets ($< 200\text{k}$ parameters), non-abelian Lie rotor dynamics preserve order-dependent token representations far more efficiently than unconstrained linear layers, requiring $19.7\times$ fewer parameters than the Transformer to reach $50\%$ accuracy on Tiny Shakespeare.
+    \item \textbf{Where Baselines Excel}: This efficiency holds specifically in compact parameter regimes. Standard Transformers possess mature parallel hardware acceleration (Tensor Core GEMMs) and predictable multi-billion-token scaling laws that have not yet been evaluated for CSN. Furthermore, Mamba S6 executes simpler diagonal recurrences with fewer arithmetic operations per step ($d \cdot d_{\mathrm{state}}$ vs. $N D^2$).
+\end{itemize}
 
 \section{Feasibility Benchmark: Static Spatial Perception}
 
@@ -257,14 +266,18 @@ Table~\ref{tab:cv_hardware_benchmark} reports pedestrian detection performance o
 \toprule
 \textbf{Model Architecture} & \textbf{Parameters} & \textbf{Pre-training Dataset} & \textbf{Latency} & \textbf{FPS} & \textbf{Peak VRAM} & \textbf{Recall (\%)} & \textbf{F1 (\%)} & \textbf{Info Density} \\ \midrule
 \textbf{YOLO26n (Calibrated Baseline)\footnote{Official Ultralytics YOLO26n baseline~\cite{ultralytics2024yolo}, fine-tuned on MOT16 pedestrian sequences.}} & 2,572,280 & MS COCO (118k img, 500 ep) & 46.78 ms & 21.4 & 80.7 MB & 65.4\% & \textbf{73.60\%} & 29.39 \\ \midrule
-\textbf{CSN-V1 (Surgical Baseline)} & 950,510 & MOT16 Scratch (5.3k fr, 15 ep) & \textbf{49.27 ms} & \textbf{20.3} & 107.6 MB & 60.4\% & 59.95\% & \textbf{64.65} \\
-\textbf{CSN-V3 Deep Unleash (Peak)} & \textbf{1,296,213} & MOT16 Scratch (5.3k fr, 20 ep) & \textbf{54.98 ms} & \textbf{18.2} & 107.6 MB & 61.0\% & \textbf{65.06\%} & \textbf{50.19} \\
-\textbf{CSN-V3 High-Sensitivity } $\mathbf{(\tau = 0.15)}$ & 1,296,213 & MOT16 Scratch (5.3k fr, 20 ep) & \textbf{56.79 ms} & \textbf{17.6} & 107.6 MB & \textbf{70.0\%} & 60.31\% & 46.53 \\ \bottomrule
+\textbf{CSN-V1 (Baseline, 15 ep)} & 950,510 & MOT16 Scratch (5.3k fr, 15 ep) & \textbf{49.27 ms} & \textbf{20.3} & 107.6 MB & 60.4\% & 59.95\% & \textbf{64.65} \\
+\textbf{CSN-V3 (Balanced, } $\mathbf{\tau = 0.25)}$ & \textbf{1,296,213} & MOT16 Scratch (5.3k fr, 20 ep) & \textbf{54.98 ms} & \textbf{18.2} & 107.6 MB & 61.0\% & \textbf{65.06\%} & \textbf{50.19} \\
+\textbf{CSN-V3 (High-Recall, } $\mathbf{\tau = 0.15)}$ & 1,296,213 & MOT16 Scratch (5.3k fr, 20 ep) & \textbf{56.79 ms} & \textbf{17.6} & 107.6 MB & \textbf{70.0\%} & 60.31\% & 46.53 \\ \bottomrule
 \end{tabular}
 }
 \end{table}
 
-Despite training exclusively on MOT16 (5,316 frames) compared to YOLO26n's full MS COCO pretraining (118,287 images), CSN-V3 achieves \textbf{70.0\% recall} and \textbf{50.19 F1/M-Param} (+70.7\% information density) at $1.98\times$ fewer parameters, with register-level fused CUDA kernels delivering real-time throughput (54.98 ms / 18.2 FPS).
+\textbf{Specific Operating Conditions}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Where CSN Excels}: When trained strictly from scratch under extreme data scarcity (MOT16 only, 5,316 frames), CSN-V3 achieves higher pedestrian recall (\textbf{70.0\%} vs. 65.4\%) and higher information density (\textbf{50.19} vs. 29.39 F1/M-Param) at half the parameter count of YOLO26n (1.29M vs. 2.57M), showing that Lie rotor representations preserve spatial articulated structures without requiring extensive image datasets.
+    \item \textbf{Where Baseline Excels}: When extensive pre-training is available (MS COCO, 118,287 images), YOLO26n achieves a substantially higher overall F1-score (\textbf{73.60\%} vs. 65.06\%) and higher precision. Furthermore, YOLO26n exhibits lower forward latency (\textbf{46.78 ms} vs. 54.98 ms) and lower peak VRAM consumption (\textbf{80.7 MB} vs. 107.6 MB), benefiting from mature hardware-optimized 2D convolutions. Finally, YOLO is validated across 80 diverse object classes, whereas CSN-V3 is presently validated only on single-class pedestrian detection.
+\end{itemize}
 
 \section{Real-Hardware Autoregressive Generation Metrics}
 
@@ -284,12 +297,16 @@ Mamba S6 (2L, $d_{\mathrm{state}}=16$) & 72,000 & 41.65\% (Sub-Par) & 103.3 tok/
 Liquid CfC (2L, $h=64$) & 86,400 & 36.80\% (Sub-Par) & 39.0 tok/s & 36.2 tok/s & 31.5 tok/s & 27.8 tok/s & $\mathcal{O}(1)$ (Constant) \\ \midrule
 \textbf{CSN-LM } $\mathbf{\Cl(4, 0)}$ & \textbf{80,802} & 46.23\% & \textbf{282.5 tok/s} & \textbf{232.1 tok/s} & \textbf{257.9 tok/s} & \textbf{271.8 tok/s} & $\mathbf{\mathcal{O}(1)}$ \textbf{(20.7 MB)} \\
 \textbf{CSN-LM } $\mathbf{\Cl(6, 0)}$ & \textbf{126,740} & 49.07\% & \textbf{273.9 tok/s} & \textbf{252.0 tok/s} & \textbf{259.8 tok/s} & \textbf{301.0 tok/s} & $\mathbf{\mathcal{O}(1)}$ \textbf{(21.1 MB)} \\
-\textbf{CSN-LM } $\mathbf{\Cl(8, 0)}$ \textbf{(Master)} & \textbf{158,164} & \textbf{50.50\% (Parity)} & \textbf{259.7 tok/s} & \textbf{224.1 tok/s} & \textbf{231.5 tok/s} & \textbf{259.0 tok/s} & $\mathbf{\mathcal{O}(1)}$ \textbf{(21.6 MB)} \\ \bottomrule
+\textbf{CSN-LM } $\mathbf{\Cl(8, 0)}$ & \textbf{158,164} & \textbf{50.50\% (Parity)} & \textbf{259.7 tok/s} & \textbf{224.1 tok/s} & \textbf{231.5 tok/s} & \textbf{259.0 tok/s} & $\mathbf{\mathcal{O}(1)}$ \textbf{(21.6 MB)} \\ \bottomrule
 \end{tabular}
 }
 \end{table}
 
-At iso-accuracy parity, CSN-LM $\Cl(6, 0)$ generates at \textbf{301.0 tokens/second} at $L=2048$ ($1.54\times$ speedup over the Scaled Transformer at 195.6 tok/s), while maintaining a strictly flat $\mathcal{O}(1)$ state memory footprint ($\sim 21$ MB).
+\textbf{Specific Operating Conditions}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Where CSN Excels}: At long context horizons ($L=2048$) under iso-accuracy parity, CSN-LM $\Cl(6, 0)$ generates at \textbf{301.0 tokens/second} ($1.54\times$ speedup over the Scaled Transformer at 195.6 tok/s), while keeping state memory strictly flat at $\mathcal{O}(1)$ ($\sim 21$ MB), avoiding the linear memory explosion of KV-caches.
+    \item \textbf{Where Baselines Excel}: At short context lengths ($L=128$), an unscaled small Transformer with narrow hidden dimensions ($d=64$) delivers higher raw throughput (\textbf{552.4 tok/s}), though its task accuracy is severely degraded (28.42\%). Similarly, diagonal state space models (Mamba S6) feature smaller baseline parameter counts (72k) and simpler element-wise operations.
+\end{itemize}
 
 \section{Roadmap and Future Architectural Horizons}
 

@@ -39,14 +39,15 @@
 \begin{abstract}
 Modern deep learning architectures predominantly map representations to unconstrained Euclidean coordinates in $\mathbb{R}^d$, neglecting coordinate-free geometric invariants and non-commutative compositionality. While Transformer self-attention achieves high expressive capacity, it incurs an irreducible quadratic computational complexity $\mathcal{O}(L^2)$ and an exploding KV-cache memory footprint. Conversely, sub-quadratic State Space Models (SSMs) enforce strictly commutative diagonal transitions ($A_t A_{t-1} = A_{t-1} A_t$), leading to state degeneracy when capturing hierarchical order permutations and non-commutative dependencies.
 
-This work introduces \textbf{Clifford Space Networks (CSN)}, an analytical geometric framework founded on Clifford multivector algebras $\Cl(p, q)$ and continuous \textbf{non-abelian} Lie rotor groups $\mathrm{Spin}(n)$. Unlike existing Clifford neural networks designed primarily for static PDE surrogates and spatial equivariance, CSN formulates recurrent state transitions as isometric Lie group rotations via the rational Cayley transform, executing in strictly sub-quadratic time through an $\mathcal{O}(L \log L)$ parallel associative scan and $\mathcal{O}(1)$ autoregressive generation memory.
+This work introduces \textbf{Clifford Space Networks (CSN)}, an analytical geometric framework founded on Clifford multivector algebras $\Cl(p, q)$ and continuous \textbf{non-abelian} Lie rotor groups $\mathrm{Spin}(n)$. Unlike existing Clifford neural networks designed primarily for static PDE surrogates and spatial equivariance, CSN formulates recurrent state transitions as isometric Lie group rotations via the rational Cayley transform, executing in sub-quadratic time through an $\mathcal{O}(L \log L)$ parallel associative scan and $\mathcal{O}(1)$ autoregressive generation memory.
 
-\textbf{As a v1 feasibility study}, this paper validates the core mathematical operator across compact sequence and spatial perception tasks, clearly identifying both operating advantages and specific empirical boundaries:
+\textbf{As an early-stage, raw v1 feasibility prototype}, this paper validates the core mathematical operator across compact sequence and spatial perception tasks, establishing the foundation for its central theoretical thesis: \textbf{asymptotic scalability through state density}.
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Sequence Feasibility (CSN-LM)}: Under low-parameter capacity constraints on the Tiny Shakespeare character benchmark, CSN-LM $\Cl(8, 0)$ reaches \textbf{50.50\% Top-1 Accuracy} (PPL 5.46) with \textbf{158,164 parameters}, matching the accuracy of a 1.90M parameter Scaled Transformer (\textbf{19.7$\times$ parameter reduction}) and demonstrating up to \textbf{1.54$\times$ faster test-time token generation} at long contexts ($L=2048$) with constant $\mathcal{O}(1)$ memory ($\sim 21$ MB). Conversely, standard Transformers maintain higher raw parallel training token throughput due to vendor-optimized BLAS GEMMs, and diagonal SSMs (Mamba) exhibit lower per-step recurrence arithmetic ($d \cdot d_{\mathrm{state}}$ vs. $N D^2$).
-    \item \textbf{Spatial Feasibility (CSN-V3)}: When trained exclusively from scratch on limited domain data (MOT16, 5.3k frames), CSN-V3 achieves \textbf{70.0\% pedestrian recall} and \textbf{50.19 F1 per million parameters} at 1.29M parameters ($1.98\times$ fewer than YOLO26n) with fused CUDA scan kernels operating at real-time speeds (54.98 ms / 18.2 FPS on a GTX 1660 Ti). Conversely, the fully pre-trained YOLO26n baseline (MS COCO 118k images) achieves higher overall F1 (73.60\% vs. 65.06\%), lower forward latency (46.78 ms), and lower peak VRAM (80.7 MB vs. 107.6 MB), reflecting the maturity of 2D convolutional implementations.
+    \item \textbf{Theoretical Scalability and State Density}: Formally, diagonal SSMs incur an $\mathcal{O}(d)$ per-step transition cost to maintain an $\mathcal{O}(d)$ scalar state capacity. In contrast, while CSN incurs an $\mathcal{O}(D^2)$ matrix transition cost per channel, its non-abelian Lie rotor phase space and multivector interaction density scale cubically as $\mathcal{O}(D^3)$. Although this cubic density advantage is partially masked on small models by constant-factor system overheads, it establishes the theoretical engine for asymptotic scalability—the central focus of Version 2 (v2).
+    \item \textbf{Sequence Feasibility (CSN-LM)}: Under low-parameter capacity constraints on Tiny Shakespeare, CSN-LM $\Cl(8, 0)$ reaches \textbf{50.50\% Top-1 Accuracy} (PPL 5.46) with \textbf{158,164 parameters}, matching a 1.90M parameter Scaled Transformer (\textbf{19.7$\times$ parameter reduction}) and demonstrating up to \textbf{1.54$\times$ faster token generation} at $L=2048$ with constant $\mathcal{O}(1)$ memory ($\sim 21$ MB). Conversely, standard Transformers maintain higher raw parallel training token throughput via vendor-tuned BLAS GEMMs, and diagonal SSMs (Mamba) execute simpler scalar arithmetic ($d \cdot d_{\mathrm{state}}$ vs. $N D^2$).
+    \item \textbf{Spatial Feasibility (CSN-V3)}: When trained exclusively from scratch on limited domain data (MOT16, 5.3k frames), CSN-V3 achieves \textbf{70.0\% pedestrian recall} and \textbf{50.19 F1 per million parameters} at 1.29M parameters ($1.98\times$ fewer than YOLO26n) with fused CUDA scan kernels operating at real-time speeds (54.98 ms / 18.2 FPS on a GTX 1660 Ti). Conversely, the fully pre-trained YOLO26n baseline (MS COCO 118k images) achieves higher overall F1 (73.60\% vs. 65.06\%), lower forward latency (46.78 ms), and lower peak VRAM (80.7 MB vs. 107.6 MB).
 \end{enumerate}
-Finally, we position CSN primarily as an \textbf{analytical solver for formal logic graphs and physical Hamiltonian systems}. We define the immediate \textbf{v2 roadmap} focused strictly on empirical scaling across standard corpora (BabyLM, TinyStories, ImageNet) and new modalities, while mapping out long-term theoretical horizons including \textbf{Port-Hamiltonian Interconnections (PHS)} to resolve the neuron interconnect bottleneck, and \textbf{orbifold quotient geometries} for critical singularities.
+Finally, we emphasize that the v1 architecture remains early-stage and raw. We position CSN primarily as an \textbf{analytical solver for formal logic graphs and physical Hamiltonian systems}, outline the immediate \textbf{v2 empirical scaling agenda} (BabyLM 10M/100M, TinyStories, ImageNet-1k), and delineate long-term theoretical horizons: \textbf{Port-Hamiltonian Interconnections (PHS)} to resolve the neuron interconnect bottleneck, and \textbf{orbifold quotient geometries} for critical singularities.
 \end{abstract}
 
 \section{Introduction}
@@ -92,15 +93,15 @@ While standard deep learning architectures approximate tasks through statistical
     \item \textbf{Physical System Modeling and Gauge Invariants}: Physical conservation laws (Hamiltonian mechanics, Maxwell's electrodynamics $F = E + I c B$, and gauge field theories) are natively expressed via differential forms and bivectors. CSN operates directly on the Lie group $\mathrm{Spin}(n)$ with strict algebraic norm preservation, providing an inductive bias for physical dynamical systems.
 \end{enumerate}
 
-\subsection{Architectural Scope: v1 Feasibility and Operating Boundaries}
+\subsection{Architectural Scope: v1 Raw Prototype, Theoretical Scalability, and Operating Boundaries}
 
-This work constitutes a \textbf{Version 1 (v1) architectural feasibility study}. The empirical benchmarks presented herein validate that non-abelian Lie rotor scans can be executed with exact isometry, sub-quadratic training, and constant inference memory.
+This work constitutes a \textbf{Version 1 (v1) architectural feasibility study}. It is essential to recognize that the CSN architecture remains in an \textbf{early-stage, raw prototype phase}: custom CUDA kernels are un-optimized compared to mature commercial libraries, inter-neuron communication is mediated by standard linear projections, and empirical results are bounded by controlled proof-of-concept datasets.
 
-We explicitly recognize the empirical boundaries of this first iteration:
+Nevertheless, the central theoretical motivation of CSN lies in its \textbf{asymptotic scalability driven by algebraic state density}:
 \begin{itemize}[leftmargin=*]
-    \item \textbf{Established Transformer Scaling}: While CSN demonstrates superior parameter efficiency under compact capacity constraints, standard Transformers benefit from established scaling laws across hundreds of billions of tokens, where self-attention patterns and dense Tensor Core operations remain dominant.
-    \item \textbf{Arithmetic Overhead}: CSN computes per-channel matrix Cayley inversions ($N D^2$), incurring higher per-token arithmetic cost than diagonal SSMs or standard feedforward projections.
-    \item \textbf{Dataset Scope}: The v1 evaluations focus on controlled compact datasets (Tiny Shakespeare, MOT16). Phase 2 (v2) will systematically benchmark against large-scale standardized corpora (BabyLM 10M/100M, TinyStories, ImageNet-1k).
+    \item \textbf{Computational Complexity vs. State Density}: In diagonal SSMs, the recurrent update per step scales linearly as $\mathcal{O}(d)$, but yields only $\mathcal{O}(d)$ independent commutative state channels. In CSN, state transitions are non-abelian matrix rotations requiring $\mathcal{O}(D^2)$ arithmetic operations per channel. However, the resulting non-commutative Lie rotor phase space and multivector interaction density scale as $\mathcal{O}(D^3)$.
+    \item \textbf{The Scaling Ratio}: Because the state representation capacity exponent ($\sim D^3$) strictly exceeds the transition computational complexity exponent ($\sim D^2$), CSN possesses a superior asymptotic information-scaling ratio. 
+    \item \textbf{Low-Capacity Masking}: On compact, small-scale models, this cubic density advantage is partially masked by constant-factor system overheads and narrow channel dimensions. Rigorously testing whether this $\mathcal{O}(D^3)$ state density translates to superior empirical scaling laws on large-scale corpora (BabyLM, TinyStories) and computer vision (ImageNet-1k) constitutes the \textbf{primary focus of Version 2 (v2)}.
 \end{itemize}
 
 \section{Mathematical Foundations: Clifford Algebras and Lie Rotors}
@@ -160,7 +161,7 @@ Because $(M_j, C_j) \circ (M_i, C_i) = (M_j M_i, M_j C_i + C_j)$ satisfies exact
 \end{equation}
 the entire sequence can be trained via the \textbf{parallel associative prefix scan} in $\mathcal{O}(L \log L)$ time.
 
-\section{Asymptotic Complexity Analysis}
+\section{Asymptotic Complexity Analysis: Transition Arithmetic vs. State Density}
 
 Table~\ref{tab:complexity_comparison} compares the asymptotic characteristics of modern architectures.
 
@@ -169,17 +170,19 @@ Table~\ref{tab:complexity_comparison} compares the asymptotic characteristics of
 \caption{Asymptotic complexity and architectural characteristics across foundation paradigms.}
 \label{tab:complexity_comparison}
 \resizebox{\textwidth}{!}{
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{}lcccccc@{}}
 \toprule
-\textbf{Architecture} & \textbf{Training Time} & \textbf{Inference Latency} & \textbf{Inference Memory} & \textbf{State Algebra} & \textbf{Parallel Scan} \\ \midrule
-Transformer (GPT / ViT) & $\mathcal{O}(L^2 d + L d^2)$ & $\mathcal{O}(L d)$ & $\mathcal{O}(L d)$ & Flat Dot-Product & Exact ($\mathcal{O}(1)$ Matrix) \\
-Mamba S6 (Gu et al.) & $\mathcal{O}(L d d_{\mathrm{state}})$ & $\mathcal{O}(d d_{\mathrm{state}})$ & $\mathcal{O}(d_{\mathrm{state}})$ & Commutative Diagonal & Associative Scan \\
-Liquid CfC (Hasani et al.) & $\mathcal{O}(L d)$ & $\mathcal{O}(d^2)$ & $\mathcal{O}(d)$ & Euclidean Vector ODE & None (Sequential Loop) \\ \midrule
-\textbf{CSN-LM (Parallel Scan)} & $\mathbf{\mathcal{O}(L \log L \cdot N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & \textbf{Non-Abelian } $\mathbf{\mathrm{Spin}(n)}$ & \textbf{Associative Prefix Scan} \\
-\textbf{CSN-LM (Fused CUDA)} & $\mathbf{\mathcal{O}(L \cdot N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & \textbf{Non-Abelian } $\mathbf{\mathrm{Spin}(n)}$ & \textbf{Single-Launch Kernel} \\ \bottomrule
+\textbf{Architecture} & \textbf{Training Time} & \textbf{Inference Latency} & \textbf{Inference Memory} & \textbf{Per-Step Arithmetic} & \textbf{State Interaction Density} & \textbf{Parallel Scan} \\ \midrule
+Transformer (GPT / ViT) & $\mathcal{O}(L^2 d + L d^2)$ & $\mathcal{O}(L d)$ & $\mathcal{O}(L d)$ & $\mathcal{O}(L d)$ & Unconstrained Matrix & Exact ($\mathcal{O}(1)$ Matrix) \\
+Mamba S6 (Gu et al.) & $\mathcal{O}(L d d_{\mathrm{state}})$ & $\mathcal{O}(d d_{\mathrm{state}})$ & $\mathcal{O}(d_{\mathrm{state}})$ & $\mathcal{O}(d)$ & Commutative $\mathcal{O}(d)$ & Associative Scan \\
+Liquid CfC (Hasani et al.) & $\mathcal{O}(L d)$ & $\mathcal{O}(d^2)$ & $\mathcal{O}(d)$ & $\mathcal{O}(d^2)$ & Euclidean $\mathcal{O}(d)$ & None (Sequential Loop) \\ \midrule
+\textbf{CSN-LM (Parallel Scan)} & $\mathbf{\mathcal{O}(L \log L \cdot N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & $\mathbf{\mathcal{O}(D^2)}$ & \textbf{Non-Abelian } $\mathbf{\mathcal{O}(D^3)}$ & \textbf{Associative Prefix Scan} \\
+\textbf{CSN-LM (Fused CUDA)} & $\mathbf{\mathcal{O}(L \cdot N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & $\mathbf{\mathcal{O}(N D^2)}$ & $\mathbf{\mathcal{O}(D^2)}$ & \textbf{Non-Abelian } $\mathbf{\mathcal{O}(D^3)}$ & \textbf{Single-Launch Kernel} \\ \bottomrule
 \end{tabular}
 }
 \end{table}
+
+As shown in Table~\ref{tab:complexity_comparison}, while CSN incurs a quadratic per-step transition cost $\mathcal{O}(D^2)$ compared to diagonal SSMs' $\mathcal{O}(d)$, it unlocks a cubic state interaction density $\mathcal{O}(D^3)$. This fundamental asymmetry between transition arithmetic and state space capacity is the core theoretical driver of scalability.
 
 \section{Feasibility Benchmark: Dynamic Sequence Modeling}
 
@@ -222,7 +225,7 @@ Liquid CfC (2 layers stacked) & 64 (Euclidean) & 86,400 & 9.12 & 36.80\% & 3.189
 }
 \end{table}
 
-\subsection{Iso-Accuracy Scaling Parity and Trade-off Analysis}
+\subsection{Iso-Accuracy Scaling Parity and the Scalability Thesis}
 
 To reach the accuracy of CSN-LM with 158k parameters, a standard Transformer was scaled until matching parity ($\approx 50.0\%$ Top-1 Accuracy, Table~\ref{tab:iso_accuracy}).
 
@@ -242,10 +245,10 @@ Scaled Liquid CfC (2L, $d=128$) & 380,000 & 2.4$\times$ & 7.89 & 40.20\% \\ \bot
 }
 \end{table}
 
-\textbf{Specific Operating Conditions}:
+\textbf{Specific Operating Conditions and Scalability Analysis}:
 \begin{itemize}[leftmargin=*]
-    \item \textbf{Where CSN Excels}: Under tight capacity budgets ($< 200\text{k}$ parameters), non-abelian Lie rotor dynamics preserve order-dependent token representations far more efficiently than unconstrained linear layers, requiring $19.7\times$ fewer parameters than the Transformer to reach $50\%$ accuracy on Tiny Shakespeare.
-    \item \textbf{Where Baselines Excel}: This efficiency holds specifically in compact parameter regimes. Standard Transformers possess mature parallel hardware acceleration (Tensor Core GEMMs) and predictable multi-billion-token scaling laws that have not yet been evaluated for CSN. Furthermore, Mamba S6 executes simpler diagonal recurrences with fewer arithmetic operations per step ($d \cdot d_{\mathrm{state}}$ vs. $N D^2$).
+    \item \textbf{Where CSN Excels (Empirical Demonstration of State Density)}: Under tight parameter budgets ($< 200\text{k}$ parameters), the $\mathcal{O}(D^3)$ state interaction density preserves order-dependent token representations far more effectively than flat linear projections, requiring $19.7\times$ fewer parameters than the Transformer to reach $50\%$ accuracy on Tiny Shakespeare.
+    \item \textbf{Where Baselines Excel / Raw Prototype Limitations}: Formally, diagonal SSMs (Mamba S6) execute lighter per-step arithmetic ($d \cdot d_{\mathrm{state}}$ scalar operations vs. $N D^2$ matrix Cayley transforms). Furthermore, standard Transformers benefit from mature vendor BLAS GEMMs that achieve peak Tensor Core hardware utilization during parallel training. Because CSN is currently in a raw prototype state, its $\mathcal{O}(D^3)$ capacity scaling remains to be fully verified on multi-billion token corpora (BabyLM, TinyStories)—the definitive mandate for Version 2 (v2).
 \end{itemize}
 
 \section{Feasibility Benchmark: Static Spatial Perception}
@@ -273,10 +276,10 @@ Table~\ref{tab:cv_hardware_benchmark} reports pedestrian detection performance o
 }
 \end{table}
 
-\textbf{Specific Operating Conditions}:
+\textbf{Specific Operating Conditions and Vision Scalability}:
 \begin{itemize}[leftmargin=*]
     \item \textbf{Where CSN Excels}: When trained strictly from scratch under extreme data scarcity (MOT16 only, 5,316 frames), CSN-V3 achieves higher pedestrian recall (\textbf{70.0\%} vs. 65.4\%) and higher information density (\textbf{50.19} vs. 29.39 F1/M-Param) at half the parameter count of YOLO26n (1.29M vs. 2.57M), showing that Lie rotor representations preserve spatial articulated structures without requiring extensive image datasets.
-    \item \textbf{Where Baseline Excels}: When extensive pre-training is available (MS COCO, 118,287 images), YOLO26n achieves a substantially higher overall F1-score (\textbf{73.60\%} vs. 65.06\%) and higher precision. Furthermore, YOLO26n exhibits lower forward latency (\textbf{46.78 ms} vs. 54.98 ms) and lower peak VRAM consumption (\textbf{80.7 MB} vs. 107.6 MB), benefiting from mature hardware-optimized 2D convolutions. Finally, YOLO is validated across 80 diverse object classes, whereas CSN-V3 is presently validated only on single-class pedestrian detection.
+    \item \textbf{Where Baseline Excels / Early-Stage Vision Status}: When extensive pre-training is available (MS COCO, 118,287 images), YOLO26n achieves a substantially higher overall F1-score (\textbf{73.60\%} vs. 65.06\%) and higher precision. Furthermore, YOLO26n exhibits lower forward latency (\textbf{46.78 ms} vs. 54.98 ms) and lower peak VRAM consumption (\textbf{80.7 MB} vs. 107.6 MB), benefiting from mature hardware-optimized 2D convolutions. Finally, CSN-V3 is an early-stage spatial model tested only on single-class pedestrian bounding boxes; scaling vision to ImageNet-1k is the definitive scalability milestone of Version 2 (v2).
 \end{itemize}
 
 \section{Real-Hardware Autoregressive Generation Metrics}
@@ -310,12 +313,12 @@ Liquid CfC (2L, $h=64$) & 86,400 & 36.80\% (Sub-Par) & 39.0 tok/s & 36.2 tok/s &
 
 \section{Roadmap and Future Architectural Horizons}
 
-\subsection{Phase 2 (v2) Agenda: Empirical Scaling and Benchmark Generalization}
+\subsection{Phase 2 (v2) Agenda: Proving Empirical Scalability Across Modalities}
 
-Rather than coupling architectural complexity prematurely, the concrete scope of the upcoming \textbf{Version 2 (v2)} iteration is defined strictly around systematic empirical scaling:
+Rather than coupling architectural complexity prematurely, the concrete scope of the upcoming \textbf{Version 2 (v2)} iteration is defined strictly around systematic empirical scaling to evaluate whether the theoretical $\mathcal{O}(D^3)$ state interaction density maintains its advantage over $\mathcal{O}(d)$ commutative SSMs at scale:
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Standardized Sequence Benchmarks}: Evaluating CSN against contemporary LLaMA-style architectures (RoPE + RMSNorm + SwiGLU) and Mamba SSMs across the standardized \textbf{BabyLM Challenge (10M / 100M)} and \textbf{TinyStories} datasets on high-throughput NVIDIA RTX 4090 hardware.
-    \item \textbf{Spatial Scaling to ImageNet-1k}: Progressing from MOT16 pedestrian detection to full-scale hierarchical visual classification on ImageNet-1k to evaluate how dual-grade Clifford backbones scale relative to Vision Transformers (ViT) and modern ConvNets.
+    \item \textbf{Standardized Sequence Scalability}: Evaluating CSN against contemporary LLaMA-style architectures (RoPE + RMSNorm + SwiGLU) and Mamba SSMs across the standardized \textbf{BabyLM Challenge (10M / 100M)} and \textbf{TinyStories} datasets on high-throughput NVIDIA RTX 4090 hardware.
+    \item \textbf{Spatial Scalability to ImageNet-1k}: Progressing from early-stage MOT16 pedestrian detection to full-scale hierarchical visual classification on ImageNet-1k to evaluate how dual-grade Clifford backbones scale relative to Vision Transformers (ViT) and modern ConvNets.
     \item \textbf{Cross-Task Generalization}: Evaluating CSN across continuous time-series forecasting and physical trajectory prediction.
 \end{enumerate}
 
@@ -339,7 +342,7 @@ Smooth manifolds are locally Euclidean and inherently lack singular points. Cons
 
 This paper has presented Version 1 of Clifford Space Networks (CSN), introducing continuous non-abelian Lie rotor scans as an analytically grounded, sub-quadratic alternative to unconstrained Euclidean networks. 
 
-By grounding state transitions in the rational Cayley transform on $\mathrm{Spin}(n)$ and establishing strict algebraic isometry, CSN demonstrates remarkable sample efficiency and constant inference memory on compact feasibility benchmarks. While Version 2 focuses squarely on empirical scaling across standard corpora (BabyLM, TinyStories, ImageNet), this work establishes a rigorous mathematical foundation and charts clear long-term horizons toward Port-Hamiltonian interconnections and orbifold geometries.
+By grounding state transitions in the rational Cayley transform on $\mathrm{Spin}(n)$ and establishing strict algebraic isometry, CSN demonstrates remarkable sample efficiency and constant inference memory on compact feasibility benchmarks. While Version 1 remains an early-stage, raw prototype, it articulates a foundational theoretical thesis: by coupling quadratic transition costs $\mathcal{O}(D^2)$ with cubic non-abelian state interaction density $\mathcal{O}(D^3)$, CSN introduces an inherently scalable geometric substrate. Empirical validation of this scaling law on BabyLM, TinyStories, and ImageNet forms the definitive agenda for Version 2, supported by long-term theoretical horizons in Port-Hamiltonian interconnections and orbifold geometries.
 
 \bibliographystyle{plain}
 \bibliography{references}

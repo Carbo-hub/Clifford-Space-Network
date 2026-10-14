@@ -50,6 +50,8 @@ This archive constitutes the open reproducible research deposit for the **Cliffo
 
 ## 3. Pre-trained Checkpoint Summary
 
+> **Weights Hosting**: All pre-trained PyTorch checkpoints listed below are hosted on [Google Drive](https://drive.google.com/drive/folders/1jzsZBEl-FwJkyJkHERvsGA2E3M-lVQeF?usp=sharing).
+
 | File Name | Domain | Architecture Details | Parameters | Target Metric |
 | :--- | :--- | :--- | :---: | :--- |
 | `csn_v3_deep_unleash_best.pt` | Computer Vision | CSN-V3 MOT16 Deep Detector | 5.34M | F1 = 65.06% ($\tau=0.25$), Recall = 70.0% ($\tau=0.15$) |

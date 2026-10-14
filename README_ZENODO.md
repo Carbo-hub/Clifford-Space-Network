@@ -2,7 +2,7 @@
 
 **Deposit Title:** Clifford Space Networks: Sub-Quadratic Non-Abelian Lie Rotor Scans for Geometric Sequence Modeling and Physical Systems  
 **Author:** Mykyta Nosenko  
-**Affiliation:** Independent Researcher, Kharkiv, Ukraine  
+**Affiliation:** National Technical University "Kharkiv Polytechnic Institute" (NTU KhPI), Kharkiv, Ukraine  
 **ORCID:** [0009-0006-1976-1557](https://orcid.org/0009-0006-1976-1557)  
 **License:** Apache-2.0  
 **DOI:** Pending Zenodo Registration  

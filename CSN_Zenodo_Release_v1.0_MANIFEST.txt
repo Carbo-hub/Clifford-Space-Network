@@ -1,20 +1,20 @@
 Archive: CSN_Zenodo_Release_v1.0.zip
-Size: 56734749 bytes (54.11 MB)
-SHA256: eeeb94c6d03b1c3263241517e6988fbeafcb21d5adb8debec41209ca4a585a4c
+Size: 56748958 bytes (54.12 MB)
+SHA256: 5c02c25cf367cb82d21b8e740c8505f42242f7484699c18e4c1b48441274a93b
 
 Contained Files:
-        2548 bytes | .zenodo.json
+        2600 bytes | .zenodo.json
          979 bytes | CMakeLists.txt
        11545 bytes | LICENSE
        24651 bytes | README.md
-        6122 bytes | README_ZENODO.md
+        6172 bytes | README_ZENODO.md
      3881783 bytes | checkpoints/csn_large_mot16_best.pt
       649775 bytes | checkpoints/csn_lm_cl8_master.pt
      3072785 bytes | checkpoints/csn_universal_mot16_best.pt
     21346486 bytes | checkpoints/csn_v3_coco_best.pt
     21360094 bytes | checkpoints/csn_v3_deep_unleash_best.pt
     10781206 bytes | checkpoints/csn_v3_mot16_transfer_best.pt
-      294903 bytes | clifford_space_network.pdf
+      296116 bytes | clifford_space_network.pdf
        22988 bytes | csn_toolkit/README.md
         1387 bytes | csn_toolkit/csn/__init__.py
         3056 bytes | csn_toolkit/csn/cuda/__init__.py
@@ -42,8 +42,13 @@ Contained Files:
       120923 bytes | csn_toolkit/uv.lock
      1115394 bytes | data/tinyshakespeare.txt
        13151 bytes | docs/CLIFFORD_SPACE_NETWORK_UNIVERSAL.md
-      294903 bytes | docs/paper/clifford_space_network.pdf
-       32079 bytes | docs/paper/clifford_space_network.tex
+        5816 bytes | docs/paper/clifford_space_network.aux
+        2358 bytes | docs/paper/clifford_space_network.bbl
+        1063 bytes | docs/paper/clifford_space_network.blg
+       23443 bytes | docs/paper/clifford_space_network.log
+        6457 bytes | docs/paper/clifford_space_network.out
+      296116 bytes | docs/paper/clifford_space_network.pdf
+       32131 bytes | docs/paper/clifford_space_network.tex
        18950 bytes | docs/paper/clifford_space_network_manuscript.md
         5866 bytes | docs/paper/references.bib
         1814 bytes | formal/CliffordTENN.lean

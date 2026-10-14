@@ -102,6 +102,11 @@ def train_benchmark(num_steps=1000):
     train_time = time.time() - t0
     print(f"  Training finished in {train_time:.1f}s.")
     
+    os.makedirs('checkpoints', exist_ok=True)
+    ckpt_path = os.path.join('checkpoints', 'csn_lm_cl8_master.pt')
+    torch.save(model.state_dict(), ckpt_path)
+    print(f"  Model checkpoint saved to {ckpt_path} ({os.path.getsize(ckpt_path) / 1024:.1f} KB)")
+    
     ppl, acc, bpc, val_loss = evaluate(model, val_data, vocab_size)
     
     print("\n" + "=" * 90)

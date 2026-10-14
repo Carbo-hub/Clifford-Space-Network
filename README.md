@@ -189,11 +189,14 @@ The evolution of Clifford Space Networks is structured across three clearly deli
 
 ## 📦 Model Checkpoints & Pre-trained Weights
 
-| Checkpoint Name | Domain | Description | Size | Google Drive Link |
+All pre-trained model weights, complete evaluation harnesses, and the PDF paper are archived in the reproducible Zenodo release bundle: `CSN_Zenodo_Release_v1.0.zip`.
+
+| Checkpoint Name | Domain | Description | Size | Checkpoint Distribution |
 | :--- | :--- | :--- | :---: | :---: |
-| `csn_lm_cl8_master.pt` | Language | **CSN-LM $\mathcal{Cl}(8, 0)$ Model** (PPL = 5.46, Acc = 50.50%) | 1.8 MB | [Download Checkpoint](https://drive.google.com/drive/folders/YOUR_LINK_HERE) |
-| `csn_v3_deep_unleash_best.pt` | Vision | **CSN-V3 MOT16 Checkpoint** ($\tau = 0.25$, F1 = 65.06\%, Recall = 70.0\% at $\tau = 0.15$) | 20.4 MB | [Download Checkpoint](https://drive.google.com/drive/folders/YOUR_LINK_HERE) |
-| `csn_v3_mot16_transfer_best.pt` | Vision | **CSN-V3 Post-COCO Transfer** (Precision = 76.2%) | 10.3 MB | [Download Checkpoint](https://drive.google.com/drive/folders/YOUR_LINK_HERE) |
+| `csn_lm_cl8_master.pt` | Language | **CSN-LM $\mathcal{Cl}(8, 0)$ Master Model** (PPL = 5.46, Acc = 50.50%) | 0.65 MB | [Zenodo Archive](https://doi.org/10.5281/zenodo.PENDING) / Drive |
+| `csn_v3_deep_unleash_best.pt` | Vision | **CSN-V3 MOT16 Checkpoint** ($\tau = 0.25$, F1 = 65.06\%, Recall = 70.0\% at $\tau = 0.15$) | 20.4 MB | [Zenodo Archive](https://doi.org/10.5281/zenodo.PENDING) / Drive |
+| `csn_v3_mot16_transfer_best.pt` | Vision | **CSN-V3 Post-COCO Transfer** (Precision = 76.2\%) | 10.3 MB | [Zenodo Archive](https://doi.org/10.5281/zenodo.PENDING) / Drive |
+| `csn_v3_coco_best.pt` | Vision | **CSN-V3 COCO Pre-trained Backbone** | 20.4 MB | [Zenodo Archive](https://doi.org/10.5281/zenodo.PENDING) / Drive |
 
 ---
 

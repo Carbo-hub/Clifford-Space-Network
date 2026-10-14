@@ -1,0 +1,26 @@
+{
+  "title": "Clifford Space Networks: Sub-Quadratic Non-Abelian Lie Rotor Scans for Geometric Sequence Modeling and Physical Systems",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p>Modern deep learning architectures predominantly map representations to unconstrained Euclidean coordinates in $\\mathbb{R}^d$, neglecting coordinate-free geometric invariants and non-commutative compositionality. While Transformer self-attention achieves high expressive capacity, it incurs an irreducible quadratic computational complexity $\\mathcal{O}(L^2)$ and an exploding KV-cache memory footprint. Conversely, sub-quadratic State Space Models (SSMs) enforce strictly commutative diagonal transitions ($A_t A_{t-1} = A_{t-1} A_t$), leading to state degeneracy when capturing hierarchical order permutations and non-commutative dependencies.</p><p>This work introduces <b>Clifford Space Networks (CSN)</b>, an analytical geometric framework founded on Clifford multivector algebras $\\mathcal{Cl}(p, q)$ and continuous <b>non-abelian</b> Lie rotor groups $\\mathrm{Spin}(n)$. Unlike existing Clifford neural networks designed primarily for static PDE surrogates and spatial equivariance, CSN formulates recurrent state transitions as isometric Lie group rotations via the rational Cayley transform, executing in sub-quadratic time through an $\\mathcal{O}(L \\log L)$ parallel associative scan and $\\mathcal{O}(1)$ autoregressive generation memory.</p><p>As an early-stage, raw v1 feasibility prototype, this paper validates the core mathematical operator across compact sequence and spatial perception tasks, establishing the foundation for its central theoretical thesis: <b>asymptotic scalability through state density</b> ($\\\mathcal{O}(D^3)$ state interaction density vs $\\mathcal{O}(D^2)$ per-step transition compute). We outline the immediate v2 empirical scaling agenda (BabyLM 10M/100M, TinyStories, ImageNet-1k) and long-term theoretical horizons including Port-Hamiltonian Interconnections (PHS) and orbifold quotient geometries.</p>",
+  "creators": [
+    {
+      "name": "Nosenko, Mykyta",
+      "affiliation": "Independent Researcher, Kharkiv, Ukraine",
+      "orcid": "0009-0006-1976-1557"
+    }
+  ],
+  "access_right": "open",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Clifford Algebra",
+    "Geometric Algebra",
+    "Lie Groups",
+    "Spin(n)",
+    "Non-Abelian State Space Models",
+    "Sequence Modeling",
+    "Computer Vision",
+    "Port-Hamiltonian Systems",
+    "Orbifold Geometries"
+  ]
+}

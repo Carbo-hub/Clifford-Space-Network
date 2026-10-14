@@ -42,6 +42,7 @@ data/
 *.pth
 *.onnx
 checkpoints/
+zenodo_bundle/
 yolo*.pt
 
 # Training runs, telemetry and logs
